@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DriversModule } from './drivers/drivers.module';
 import { CircuitsModule } from './circuits/circuits.module';
 import { TeamsModule } from './teams/teams.module';
-import { Circuit } from './circuits/circuit.entity';
+import { Circuits } from './circuits/circuits.entity';
 import { Drivers } from './drivers/drivers.entity';
 import { Teams } from './teams/teams.entity';
 
@@ -18,7 +18,7 @@ import { Teams } from './teams/teams.entity';
       username: 'root',
       password: 'root',
       database: 'formula_one',
-      entities: [Circuit, Drivers, Teams],
+      entities: [Circuits, Drivers, Teams],
       synchronize: false,
     }),
     DriversModule,
