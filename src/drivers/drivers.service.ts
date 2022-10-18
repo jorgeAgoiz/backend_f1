@@ -8,6 +8,7 @@ export class DriversService {
   constructor(@InjectRepository(Drivers) private repo: Repository<Drivers>) {}
 
   async get() {
-    return await this.repo.find();
+    const drivers: Array<Drivers> = await this.repo.find();
+    return drivers;
   }
 }

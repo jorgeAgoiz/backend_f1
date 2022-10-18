@@ -7,8 +7,6 @@ export class TeamsController {
 
   @Get()
   getTeams() {
-    const teams = this.teamsService.get();
-    console.log(teams);
-    return teams;
+    return this.teamsService.get();
   }
 }

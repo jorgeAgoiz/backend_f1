@@ -8,6 +8,7 @@ export class TeamsService {
   constructor(@InjectRepository(Teams) private repo: Repository<Teams>) {}
 
   async get() {
-    return await this.repo.find();
+    const teams: Array<Teams> = await this.repo.find();
+    return teams;
   }
 }

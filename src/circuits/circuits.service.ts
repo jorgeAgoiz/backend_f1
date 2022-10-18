@@ -8,6 +8,7 @@ export class CircuitsService {
   constructor(@InjectRepository(Circuits) private repo: Repository<Circuits>) {}
 
   async get() {
-    return await this.repo.find();
+    const circuits: Array<Circuits> = await this.repo.find();
+    return circuits;
   }
 }

@@ -7,8 +7,6 @@ export class CircuitsController {
 
   @Get()
   getCircuits() {
-    const circuits = this.circuitsService.get();
-    console.log(circuits);
-    return circuits;
+    return this.circuitsService.get();
   }
 }

@@ -7,8 +7,6 @@ export class DriversController {
 
   @Get()
   getDrivers() {
-    const drivers = this.driversService.get();
-    console.log(drivers);
-    return drivers;
+    return this.driversService.get();
   }
 }
