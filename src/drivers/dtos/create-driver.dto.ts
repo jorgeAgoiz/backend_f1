@@ -1,13 +1,13 @@
-import { IsString, IsNumber, IsDate } from 'class-validator';
+import { IsString, IsNumber, IsDateString } from 'class-validator';
 
 export class CreateDriverDto {
   @IsString()
   name: string;
 
   @IsNumber()
-  dorsal_name: number;
+  dorsal_number: number;
 
-  @IsDate()
+  @IsDateString()
   birthday: Date;
 
   @IsString()

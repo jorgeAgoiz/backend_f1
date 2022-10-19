@@ -1,0 +1,10 @@
+POST http://localhost:3000/drivers HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Jorge",
+    "dorsal_number": 95,
+    "birthday": "2022-10-19",
+    "country": "Spain",
+    "picture": "https://images.unsplash.com/photo-1533917588497-c0687c7b3601?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=610&q=80"
+}

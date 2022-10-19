@@ -1,4 +1,13 @@
+### DRIVERS
 GET http://localhost:3000/drivers HTTP/1.1
+
+###
+
+GET http://localhost:3000/drivers/12 HTTP/1.1
+
+###
+
+GET http://localhost:3000/drivers?country=reino%20unido HTTP/1.1
 
 ###
 
