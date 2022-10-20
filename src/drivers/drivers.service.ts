@@ -49,4 +49,13 @@ export class DriversService {
     console.log(driver);
     /* return await this.repo.remove(driver) */
   }
+
+  async update(id: number, attrs: Partial<Drivers>) {
+    const driver: Drivers = await this.repo.findOneBy({ id });
+    if (!driver) {
+      throw new Error('User not found');
+    }
+    console.log(attrs);
+    /* return this.repo.save({ ...driver, ...attrs }) */
+  }
 }

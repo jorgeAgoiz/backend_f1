@@ -4,12 +4,15 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger/dist';
 import { DriversService } from './drivers.service';
 import { CreateDriverDto } from './dtos/create-driver.dto';
-
+import { UpdateDriverDto } from './dtos/update-driver.dto';
+@ApiTags('Drivers of formula one')
 @Controller('drivers')
 export class DriversController {
   constructor(private driversService: DriversService) {}
@@ -34,6 +37,11 @@ export class DriversController {
       country,
       picture,
     });
+  }
+
+  @Patch('/:id')
+  updateDriver(@Param('id') id: string, @Body() body: UpdateDriverDto) {
+    return this.driversService.update(parseInt(id), body);
   }
 
   @Delete('/:id')

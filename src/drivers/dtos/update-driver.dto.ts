@@ -1,24 +1,24 @@
-import { IsString, IsNumber, IsDateString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateDriverDto {
+export class UpdateDriverDto {
   @IsString()
+  @IsOptional()
   @ApiProperty()
   name: string;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty()
   dorsal_number: number;
 
-  @IsDateString()
-  @ApiProperty()
-  birthday: Date;
-
   @IsString()
+  @IsOptional()
   @ApiProperty()
   country: string;
 
   @IsString()
+  @IsOptional()
   @ApiProperty()
   picture: string;
 }
