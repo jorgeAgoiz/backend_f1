@@ -17,7 +17,7 @@ export class DriversService {
   async getOneBy(id: number) {
     const driver: Drivers = await this.repo.findOneBy({ id });
     if (!driver) {
-      throw new Error('User not found');
+      throw new Error('Driver not found');
     }
     return driver;
   }
@@ -41,21 +41,21 @@ export class DriversService {
     /* return await this.repo.save(newDriver) */
   }
 
-  async remove(id: number) {
-    const driver: Drivers = await this.repo.findOneBy({ id });
-    if (!driver) {
-      throw new Error('User not found');
-    }
-    console.log(driver);
-    /* return await this.repo.remove(driver) */
-  }
-
   async update(id: number, attrs: Partial<Drivers>) {
     const driver: Drivers = await this.repo.findOneBy({ id });
     if (!driver) {
-      throw new Error('User not found');
+      throw new Error('Driver not found');
     }
     console.log(attrs);
     /* return this.repo.save({ ...driver, ...attrs }) */
+  }
+
+  async remove(id: number) {
+    const driver: Drivers = await this.repo.findOneBy({ id });
+    if (!driver) {
+      throw new Error('Driver not found');
+    }
+    console.log(driver);
+    /* return await this.repo.remove(driver) */
   }
 }

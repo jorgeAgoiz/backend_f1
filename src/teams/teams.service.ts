@@ -7,8 +7,46 @@ import { Teams } from './teams.entity';
 export class TeamsService {
   constructor(@InjectRepository(Teams) private repo: Repository<Teams>) {}
 
-  async get() {
-    const teams: Array<Teams> = await this.repo.find();
+  async getAll(country: string) {
+    const teams: Array<Teams> = await this.repo.find({ where: { country } });
     return teams;
+  }
+
+  async getOneBy(id: number) {
+    const team: Teams = await this.repo.findOneBy({ id });
+    if (!team) {
+      throw new Error('Team not found');
+    }
+    return team;
+  }
+
+  async insert({ name, country, url_logo }: Partial<Teams>) {
+    const newTeam: Teams = await this.repo.create({
+      name,
+      country,
+      url_logo,
+    });
+
+    console.log(newTeam);
+    /* return await this.repo.save(newTeam) */
+  }
+
+  async update(id: number, attrs: Partial<Teams>) {
+    const team: Teams = await this.repo.findOneBy({ id });
+    if (!team) {
+      throw new Error('Team not found');
+    }
+
+    console.log(attrs);
+    /* return this.repo.save({...team, ...attrs}) */
+  }
+
+  async remove(id: number) {
+    const team: Teams = await this.repo.findOneBy({ id });
+    if (!team) {
+      throw new Error('Team not found');
+    }
+    console.log(team);
+    /* return await this.repo.remove(team) */
   }
 }

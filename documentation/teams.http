@@ -1,0 +1,27 @@
+### TEAMS
+
+GET http://localhost:3000/teams?country=reino%20unido HTTP/1.1
+
+###
+
+POST http://localhost:3000/teams HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Onfire Team",
+    "country": "Bostwana",
+    "url_logo": "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+}
+
+###
+
+PATCH http://localhost:3000/teams/8 HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Whatever Team"
+}
+
+###
+
+DELETE http://localhost:3000/teams/6 HTTP/1.1
