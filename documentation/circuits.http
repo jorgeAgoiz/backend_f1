@@ -1,0 +1,33 @@
+### CIRCUITS
+
+GET http://localhost:3000/circuits?country=estados%20unidos&mindistance=4.56&maxdistance=6.12 HTTP/1.1
+
+###
+
+GET http://localhost:3000/circuits HTTP/1.1
+
+### 
+
+POST http://localhost:3000/circuits HTTP/1.1
+content-type: application/json
+
+{
+    "gp_name": "loquesea",
+    "circuit_name": "pepito",
+    "location": "tattoine",
+    "country": "neverland",
+    "distance": 8.234
+}
+
+###
+
+PATCH  http://localhost:3000/circuits/12 HTTP/1.1
+content-type: application/json
+
+{
+    "distance": 7.123
+}
+
+###
+
+DELETE http://localhost:3000/circuits/12 HTTP/1.1
