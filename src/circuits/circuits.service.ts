@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Circuits } from './circuits.entity';
@@ -24,7 +24,7 @@ export class CircuitsService {
   async getOneBy(id: number) {
     const circuit: Circuits = await this.repo.findOneBy({ id });
     if (!circuit) {
-      throw new Error('Circuit not found');
+      throw new NotFoundException('Circuit not found');
     }
     return circuit;
   }
@@ -51,7 +51,7 @@ export class CircuitsService {
   async update(id: number, attrs: Partial<Circuits>) {
     const circuit: Circuits = await this.repo.findOneBy({ id });
     if (!circuit) {
-      throw new Error('Driver not found');
+      throw new NotFoundException('Driver not found');
     }
     console.log(attrs);
     /* return this.repo.save({...circuit, ...attrs}) */
@@ -60,7 +60,7 @@ export class CircuitsService {
   async delete(id: number) {
     const circuit: Circuits = await this.repo.findOneBy({ id });
     if (!circuit) {
-      throw new Error('Driver not found');
+      throw new NotFoundException('Driver not found');
     }
     console.log(circuit);
     /* return this.repo.remove(circuit) */

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Teams } from './teams.entity';
@@ -15,7 +15,7 @@ export class TeamsService {
   async getOneBy(id: number) {
     const team: Teams = await this.repo.findOneBy({ id });
     if (!team) {
-      throw new Error('Team not found');
+      throw new NotFoundException('Team not found');
     }
     return team;
   }
@@ -34,7 +34,7 @@ export class TeamsService {
   async update(id: number, attrs: Partial<Teams>) {
     const team: Teams = await this.repo.findOneBy({ id });
     if (!team) {
-      throw new Error('Team not found');
+      throw new NotFoundException('Team not found');
     }
 
     console.log(attrs);
@@ -44,7 +44,7 @@ export class TeamsService {
   async remove(id: number) {
     const team: Teams = await this.repo.findOneBy({ id });
     if (!team) {
-      throw new Error('Team not found');
+      throw new NotFoundException('Team not found');
     }
     console.log(team);
     /* return await this.repo.remove(team) */

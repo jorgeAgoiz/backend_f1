@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Drivers } from './drivers.entity';
@@ -17,7 +17,7 @@ export class DriversService {
   async getOneBy(id: number) {
     const driver: Drivers = await this.repo.findOneBy({ id });
     if (!driver) {
-      throw new Error('Driver not found');
+      throw new NotFoundException('Driver not found');
     }
     return driver;
   }
@@ -44,7 +44,7 @@ export class DriversService {
   async update(id: number, attrs: Partial<Drivers>) {
     const driver: Drivers = await this.repo.findOneBy({ id });
     if (!driver) {
-      throw new Error('Driver not found');
+      throw new NotFoundException('Driver not found');
     }
     console.log(attrs);
     /* return this.repo.save({ ...driver, ...attrs }) */
@@ -53,7 +53,7 @@ export class DriversService {
   async remove(id: number) {
     const driver: Drivers = await this.repo.findOneBy({ id });
     if (!driver) {
-      throw new Error('Driver not found');
+      throw new NotFoundException('Driver not found');
     }
     console.log(driver);
     /* return await this.repo.remove(driver) */
