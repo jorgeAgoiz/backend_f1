@@ -9,7 +9,6 @@ export class GrandPrixController {
 
   @Get()
   getGrandPrix() {
-    console.log('probando');
     return this.grandPrixService.getAll();
   }
 }
