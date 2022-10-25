@@ -1,21 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Drivers } from './drivers.entity';
+import { Driver } from './driver.entity';
 
 @Injectable()
 export class DriversService {
-  constructor(@InjectRepository(Drivers) private repo: Repository<Drivers>) {}
+  constructor(@InjectRepository(Driver) private repo: Repository<Driver>) {}
 
   async getAll(country: string) {
-    const drivers: Array<Drivers> = await this.repo.find({
+    const drivers: Array<Driver> = await this.repo.find({
       where: { country },
     });
     return drivers;
   }
 
   async getOneBy(id: number) {
-    const driver: Drivers = await this.repo.findOneBy({ id });
+    const driver: Driver = await this.repo.findOneBy({ id });
     if (!driver) {
       throw new NotFoundException('Driver not found');
     }
@@ -28,8 +28,8 @@ export class DriversService {
     birthday,
     country,
     picture,
-  }: Partial<Drivers>) {
-    const newDriver: Drivers = await this.repo.create({
+  }: Partial<Driver>) {
+    const newDriver: Driver = await this.repo.create({
       name,
       dorsal_number,
       birthday,
@@ -41,8 +41,8 @@ export class DriversService {
     /* return await this.repo.save(newDriver) */
   }
 
-  async update(id: number, attrs: Partial<Drivers>) {
-    const driver: Drivers = await this.repo.findOneBy({ id });
+  async update(id: number, attrs: Partial<Driver>) {
+    const driver: Driver = await this.repo.findOneBy({ id });
     if (!driver) {
       throw new NotFoundException('Driver not found');
     }
@@ -51,7 +51,7 @@ export class DriversService {
   }
 
   async remove(id: number) {
-    const driver: Drivers = await this.repo.findOneBy({ id });
+    const driver: Driver = await this.repo.findOneBy({ id });
     if (!driver) {
       throw new NotFoundException('Driver not found');
     }

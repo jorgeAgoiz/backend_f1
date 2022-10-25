@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
-export class Drivers {
+@Entity('drivers')
+export class Driver {
   @PrimaryGeneratedColumn()
   id: number;
 

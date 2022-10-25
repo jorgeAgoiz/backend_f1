@@ -1,15 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Circuits } from './circuits.entity';
+import { Circuit } from './circuit.entity';
 import { CreateCircuitDto } from './dtos/create-circuit.dto';
 
 @Injectable()
 export class CircuitsService {
-  constructor(@InjectRepository(Circuits) private repo: Repository<Circuits>) {}
+  constructor(@InjectRepository(Circuit) private repo: Repository<Circuit>) {}
 
   async getAll({ country, mindistance, maxdistance }) {
-    const circuits: Array<Circuits> = await this.repo.find({
+    const circuits: Array<Circuit> = await this.repo.find({
       where: { country },
     });
 
@@ -22,7 +22,7 @@ export class CircuitsService {
   }
 
   async getOneBy(id: number) {
-    const circuit: Circuits = await this.repo.findOneBy({ id });
+    const circuit: Circuit = await this.repo.findOneBy({ id });
     if (!circuit) {
       throw new NotFoundException('Circuit not found');
     }
@@ -36,7 +36,7 @@ export class CircuitsService {
     country,
     distance,
   }: CreateCircuitDto) {
-    const newCircuit: Circuits = await this.repo.create({
+    const newCircuit: Circuit = await this.repo.create({
       gp_name,
       circuit_name,
       location,
@@ -48,8 +48,8 @@ export class CircuitsService {
     /* return await this.repo.save(newCircuit) */
   }
 
-  async update(id: number, attrs: Partial<Circuits>) {
-    const circuit: Circuits = await this.repo.findOneBy({ id });
+  async update(id: number, attrs: Partial<Circuit>) {
+    const circuit: Circuit = await this.repo.findOneBy({ id });
     if (!circuit) {
       throw new NotFoundException('Driver not found');
     }
@@ -58,7 +58,7 @@ export class CircuitsService {
   }
 
   async delete(id: number) {
-    const circuit: Circuits = await this.repo.findOneBy({ id });
+    const circuit: Circuit = await this.repo.findOneBy({ id });
     if (!circuit) {
       throw new NotFoundException('Driver not found');
     }

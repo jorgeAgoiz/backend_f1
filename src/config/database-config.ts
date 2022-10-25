@@ -1,8 +1,8 @@
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { GrandPrix } from 'src/grand-prix/grand-prix.entity';
-import { Circuits } from '../circuits/circuits.entity';
-import { Drivers } from '../drivers/drivers.entity';
-import { Teams } from '../teams/teams.entity';
+import { Circuit } from '../circuits/circuit.entity';
+import { Driver } from '../drivers/driver.entity';
+import { Team } from '../teams/team.entity';
 
 export class DatabaseConfiguration implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions | Promise<TypeOrmModuleOptions> {
@@ -14,7 +14,7 @@ export class DatabaseConfiguration implements TypeOrmOptionsFactory {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
 
-      entities: [Circuits, Drivers, Teams, GrandPrix],
+      entities: [Circuit, Driver, Team, GrandPrix],
       synchronize: false,
     };
   }

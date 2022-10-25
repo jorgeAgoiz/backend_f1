@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Drivers } from './drivers.entity';
+import { Driver } from './driver.entity';
 import { DriversController } from './drivers.controller';
 import { DriversService } from './drivers.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Drivers])],
+  imports: [TypeOrmModule.forFeature([Driver])],
   controllers: [DriversController],
   providers: [DriversService],
 })
