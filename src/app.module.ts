@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SentryInterceptor, SentryModule } from '@ntegral/nestjs-sentry';
 import { ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { GrandPrixModule } from './grand-prix/grand-prix.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     DriversModule,
     CircuitsModule,
     TeamsModule,
+    GrandPrixModule,
   ],
   controllers: [],
   providers: [
