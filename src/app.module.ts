@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DriversModule } from './drivers/drivers.module';
 import { CircuitsModule } from './circuits/circuits.module';
@@ -25,7 +23,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
       useFactory: async (cfg: ConfigService) => ({
         dsn: process.env.DSN_SENTRY,
         debug: true,
-        environment: 'dev',
+        environment: 'development',
         release: null,
         logLevels: ['debug'],
       }),
@@ -35,9 +33,8 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     CircuitsModule,
     TeamsModule,
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [
-    AppService,
     {
       provide: APP_INTERCEPTOR,
       useValue: new SentryInterceptor(),
