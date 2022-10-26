@@ -1,17 +1,29 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Circuit } from 'src/circuits/circuit.entity';
+import { Driver } from 'src/drivers/driver.entity';
+import { Team } from 'src/teams/team.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('grand_prix')
 export class GrandPrix {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @ManyToOne(() => Circuit, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'circuit', referencedColumnName: 'id' })
   circuit: number;
 
-  @Column()
+  @ManyToOne(() => Driver, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'driver', referencedColumnName: 'id' })
   driver: number;
 
-  @Column()
+  @ManyToOne(() => Team, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'team', referencedColumnName: 'id' })
   team: number;
 
   @Column({ length: 4 })
