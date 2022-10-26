@@ -10,7 +10,9 @@ export class GrandPrixService {
   ) {}
 
   async getAll() {
-    const grandPrixs: Array<GrandPrix> = await this.repo.find();
+    const grandPrixs: Array<GrandPrix> = await this.repo.find({
+      loadRelationIds: true,
+    });
     return grandPrixs;
   }
 }
