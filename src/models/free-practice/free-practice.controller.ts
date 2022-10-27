@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { FreePracticeService } from './free-practice.service';
 
@@ -10,5 +10,10 @@ export class FreePracticeController {
   @Get()
   getFreePractices() {
     return this.freePracticeService.getAll();
+  }
+
+  @Get('/:id')
+  getFreePracticesByGP(@Param('id') id: string) {
+    return this.freePracticeService.getAllBy(parseInt(id));
   }
 }

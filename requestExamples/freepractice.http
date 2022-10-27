@@ -1,3 +1,7 @@
 ### FREE PRACTICES
 
 GET http://localhost:3000/free-practice HTTP/1.1
+
+###
+
+GET http://localhost:3000/free-practice/12 HTTP/1.1
