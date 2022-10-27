@@ -1,4 +1,4 @@
-import { GrandPrix } from 'src/grand-prix/grand-prix.entity';
+import { GrandPrix } from 'src/models/grand-prix/grand-prix.entity';
 import {
   Entity,
   Column,

@@ -1,6 +1,6 @@
-import { Circuit } from 'src/circuits/circuit.entity';
-import { Driver } from 'src/drivers/driver.entity';
-import { Team } from 'src/teams/team.entity';
+import { Circuit } from 'src/models/circuits/circuit.entity';
+import { Driver } from 'src/models/drivers/driver.entity';
+import { Team } from 'src/models/teams/team.entity';
 import {
   Column,
   Entity,

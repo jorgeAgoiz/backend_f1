@@ -1,4 +1,4 @@
-import { GrandPrix } from 'src/grand-prix/grand-prix.entity';
+import { GrandPrix } from 'src/models/grand-prix/grand-prix.entity';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity('free_practice')
@@ -18,9 +18,9 @@ export class FreePractice {
   @Column()
   laps: number;
 
-  @Column()
+  @Column({ length: 15 })
   fast_lap: string;
 
-  @Column()
+  @Column({ length: 15 })
   average_speed: string;
 }
