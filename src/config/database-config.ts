@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
+import { FreePractice } from 'src/free-practice/free-practice.entity';
 import { GrandPrix } from 'src/grand-prix/grand-prix.entity';
 import { Circuit } from '../circuits/circuit.entity';
 import { Driver } from '../drivers/driver.entity';
@@ -14,7 +15,7 @@ export class DatabaseConfiguration implements TypeOrmOptionsFactory {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
 
-      entities: [Circuit, Driver, Team, GrandPrix],
+      entities: [Circuit, Driver, Team, GrandPrix, FreePractice],
       synchronize: false,
     };
   }

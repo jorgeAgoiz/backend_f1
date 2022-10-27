@@ -1,7 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { GrandPrix } from 'src/grand-prix/grand-prix.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 
 @Entity('circuits')
 export class Circuit {
+  @OneToMany(() => GrandPrix, (grandPrix) => grandPrix.circuit)
+  @JoinColumn({ name: 'grand_prix', referencedColumnName: 'circuit' })
   @PrimaryGeneratedColumn()
   id: number;
 
