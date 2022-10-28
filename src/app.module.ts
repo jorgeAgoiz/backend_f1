@@ -10,6 +10,7 @@ import { ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { GrandPrixModule } from './models/grand-prix/grand-prix.module';
 import { FreePracticeModule } from './models/free-practice/free-practice.module';
+import { environmentTypes, logLevels } from './common/constants/sentry-config';
 
 @Module({
   imports: [
@@ -25,9 +26,9 @@ import { FreePracticeModule } from './models/free-practice/free-practice.module'
       useFactory: async (cfg: ConfigService) => ({
         dsn: process.env.DSN_SENTRY,
         debug: true,
-        environment: 'development',
+        environment: environmentTypes.development,
         release: null,
-        logLevels: ['debug'],
+        logLevels: [logLevels.debug],
       }),
       inject: [ConfigService],
     }),
