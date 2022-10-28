@@ -1,0 +1,3 @@
+### QUALIFYINGS
+
+GET http://localhost:3000/qualifying HTTP/1.1

@@ -11,6 +11,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { GrandPrixModule } from './models/grand-prix/grand-prix.module';
 import { FreePracticeModule } from './models/free-practice/free-practice.module';
 import { environmentTypes, logLevels } from './common/constants/sentry-config';
+import { QualifyingModule } from './models/qualifying/qualifying.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { environmentTypes, logLevels } from './common/constants/sentry-config';
     TeamsModule,
     GrandPrixModule,
     FreePracticeModule,
+    QualifyingModule,
   ],
   controllers: [],
   providers: [
