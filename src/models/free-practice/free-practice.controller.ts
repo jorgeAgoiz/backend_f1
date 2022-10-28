@@ -13,7 +13,7 @@ export class FreePracticeController {
   }
 
   @Get('/:id')
-  getFreePracticesByGP(@Param('id') id: string) {
-    return this.freePracticeService.getAllBy(parseInt(id));
+  getAverageSpeedFreePracticesByGP(@Param('id') id: string) {
+    return this.freePracticeService.getAvgSpeedByGp(parseInt(id));
   }
 }
