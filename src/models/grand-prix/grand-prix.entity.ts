@@ -14,17 +14,17 @@ export class GrandPrix {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Circuit, { onDelete: 'CASCADE', eager: true })
+  @ManyToOne(() => Circuit, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'circuit', referencedColumnName: 'id' })
-  circuit: number;
+  circuit: Circuit;
 
-  @ManyToOne(() => Driver, { onDelete: 'CASCADE', eager: true })
+  @ManyToOne(() => Driver, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'driver', referencedColumnName: 'id' })
-  driver: number;
+  driver: Driver;
 
-  @ManyToOne(() => Team, { onDelete: 'CASCADE', eager: true })
+  @ManyToOne(() => Team, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'team', referencedColumnName: 'id' })
-  team: number;
+  team: Team;
 
   @Column({ length: 4 })
   year: string;

@@ -37,8 +37,7 @@ export class DriversService {
       picture,
     });
 
-    console.log(newDriver);
-    /* return await this.repo.save(newDriver) */
+    return await this.repo.save(newDriver);
   }
 
   async update(id: number, attrs: Partial<Driver>) {
@@ -46,8 +45,8 @@ export class DriversService {
     if (!driver) {
       throw new NotFoundException('Driver not found');
     }
-    console.log(attrs);
-    /* return this.repo.save({ ...driver, ...attrs }) */
+
+    return this.repo.save({ ...driver, ...attrs });
   }
 
   async remove(id: number) {
@@ -55,7 +54,7 @@ export class DriversService {
     if (!driver) {
       throw new NotFoundException('Driver not found');
     }
-    console.log(driver);
-    /* return await this.repo.remove(driver) */
+
+    return await this.repo.remove(driver);
   }
 }

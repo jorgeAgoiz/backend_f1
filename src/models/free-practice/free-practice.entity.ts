@@ -3,12 +3,11 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity('free_practice')
 export class FreePractice {
-  @ManyToOne(() => GrandPrix, { onDelete: 'CASCADE', eager: true })
+  @ManyToOne(() => GrandPrix)
   @JoinColumn({ name: 'grand_prix', referencedColumnName: 'id' })
   @PrimaryColumn()
-  grand_prix: number;
+  grand_prix: GrandPrix;
 
-  @Column()
   @PrimaryColumn()
   fp_number: number;
 

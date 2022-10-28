@@ -12,6 +12,10 @@ import { GrandPrixModule } from './models/grand-prix/grand-prix.module';
 import { FreePracticeModule } from './models/free-practice/free-practice.module';
 import { environmentTypes, logLevels } from './common/constants/sentry-config';
 import { QualifyingModule } from './models/qualifying/qualifying.module';
+import { GridModule } from './models/grid/grid.module';
+import { SprintModule } from './models/sprint/sprint.module';
+import { RaceModule } from './models/race/race.module';
+import { FastLapModule } from './models/fast-lap/fast-lap.module';
 
 @Module({
   imports: [
@@ -39,6 +43,10 @@ import { QualifyingModule } from './models/qualifying/qualifying.module';
     GrandPrixModule,
     FreePracticeModule,
     QualifyingModule,
+    GridModule,
+    SprintModule,
+    RaceModule,
+    FastLapModule,
   ],
   controllers: [],
   providers: [

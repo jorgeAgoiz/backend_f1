@@ -1,25 +1,22 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { GrandPrix } from '../grand-prix/grand-prix.entity';
 
-@Entity('qualifying')
-export class Qualifying {
+@Entity('sprint')
+export class Sprint {
   @ManyToOne(() => GrandPrix)
   @JoinColumn({ name: 'grand_prix', referencedColumnName: 'id' })
   @PrimaryColumn()
   grand_prix: GrandPrix;
 
-  @PrimaryColumn()
-  qf_number: number;
-
   @Column()
   position: number;
 
   @Column()
-  laps: number;
-
-  @Column()
-  fast_lap: string;
+  laps_disputed: number;
 
   @Column()
   average_speed: string;
+
+  @Column()
+  sprint_points: number;
 }

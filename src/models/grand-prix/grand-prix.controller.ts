@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { GrandPrixService } from './grand-prix.service';
 
@@ -8,7 +8,7 @@ export class GrandPrixController {
   constructor(private grandPrixService: GrandPrixService) {}
 
   @Get()
-  getGrandPrix() {
+  getAllGrandPrix() {
     return this.grandPrixService.getAll();
   }
 }
