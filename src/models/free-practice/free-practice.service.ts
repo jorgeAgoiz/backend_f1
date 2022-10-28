@@ -18,7 +18,7 @@ export class FreePracticeService {
     return fps;
   }
 
-  async getAvgSpeedByGp(id: number): Promise<any> {
+  async getAvgSpeedByDriver(id: number): Promise<any> {
     const avgSpeedInfo = await this.repo
       .createQueryBuilder('fp')
       .leftJoin('fp.grand_prix', 'gp')
@@ -38,28 +38,6 @@ export class FreePracticeService {
       .getRawMany();
 
     return avgSpeedInfo;
-    /*     const freePracticeSessionsGp: Array<FreePractice> =
-      await this.repo.find({
-      grand_prix: id,
-    }); */
-    /*     if (!freePracticeSessionsGp || freePracticeSessionsGp.length < 1) {
-      throw new NotFoundException('Not data found');
-    }
-    const avgSpeedFps: Array<AvgSpeedSessions> = freePracticeSessionsGp.map(
-      (elem) => {
-        return {
-          fpNumber: elem.fp_number,
-          avgSpeed: parseFloat(elem.average_speed),
-        };
-      },
-    );
-
-    return {
-      averageSpeedFps: avgSpeedFps,
-      driver: freePracticeSessionsGp[0].grand_prix['driver']['name'],
-      circuit: freePracticeSessionsGp[0].grand_prix['circuit']['circuit_name'],
-      team: freePracticeSessionsGp[0].grand_prix['team']['name'],
-    }; */
   }
 
   async getAllFpsByDriver(id: number): Promise<Array<FPSByDriver>> {

@@ -14,7 +14,7 @@ export class FreePracticeController {
 
   @Get('/avg-speed/driver/:id')
   getAverageSpeedFreePracticesByDriver(@Param('id') id: string) {
-    return this.freePracticeService.getAvgSpeedByGp(parseInt(id));
+    return this.freePracticeService.getAvgSpeedByDriver(parseInt(id));
   }
 
   @Get('/fps/driver/:id')
