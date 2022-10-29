@@ -8,10 +8,10 @@ export class FastLap {
   @PrimaryColumn()
   grand_prix: GrandPrix;
 
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'varchar', length: 8 })
   fl_session: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 15 })
   time: string;
 
   @Column()

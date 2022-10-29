@@ -11,6 +11,6 @@ export class Grid {
   @PrimaryColumn()
   position: number;
 
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'varchar', length: 12 })
   type_grid: string;
 }

@@ -14,7 +14,7 @@ export class Sprint {
   @Column()
   laps_disputed: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 15 })
   average_speed: string;
 
   @Column()

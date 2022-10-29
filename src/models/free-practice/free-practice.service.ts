@@ -2,8 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FreePractice } from './free-practice.entity';
-import { AvgSpeedSessions, Response } from './interfaces/avgSpeedByGp.types';
-import { FPSByDriver } from './interfaces/free-practice.types';
+import {
+  AVGSpeedByDriver,
+  FPSByDriver,
+} from './interfaces/free-practice.types';
 
 @Injectable()
 export class FreePracticeService {
@@ -11,15 +13,15 @@ export class FreePracticeService {
     @InjectRepository(FreePractice) private repo: Repository<FreePractice>,
   ) {}
 
-  async getAll(): Promise<FreePractice[]> {
+  async getAll(): Promise<Array<FreePractice>> {
     const fps: Array<FreePractice> = await this.repo.find({
       relations: ['grand_prix', 'grand_prix.driver'],
     });
     return fps;
   }
 
-  async getAvgSpeedByDriver(id: number): Promise<any> {
-    const avgSpeedInfo = await this.repo
+  async getAvgSpeedByDriver(id: number): Promise<Array<AVGSpeedByDriver>> {
+    const avgSpeedInfo: Array<AVGSpeedByDriver> = await this.repo
       .createQueryBuilder('fp')
       .leftJoin('fp.grand_prix', 'gp')
       .leftJoin('gp.driver', 'driver')
@@ -34,14 +36,17 @@ export class FreePracticeService {
         'circuit.circuit_name',
         'circuit.id',
       ])
-      .orderBy('gp.id')
       .getRawMany();
+
+    if (!avgSpeedInfo || avgSpeedInfo.length < 1) {
+      throw new NotFoundException('Driver data not found.');
+    }
 
     return avgSpeedInfo;
   }
 
   async getAllFpsByDriver(id: number): Promise<Array<FPSByDriver>> {
-    const fps: Array<FPSByDriver> = await this.repo
+    const fpsData: Array<FPSByDriver> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
       .innerJoinAndSelect('gp.driver', 'driver')
@@ -61,6 +66,10 @@ export class FreePracticeService {
       ])
       .getRawMany();
 
-    return fps;
+    if (!fpsData || fpsData.length < 1) {
+      throw new NotFoundException('Driver data not found.');
+    }
+
+    return fpsData;
   }
 }

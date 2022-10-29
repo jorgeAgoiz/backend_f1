@@ -17,9 +17,9 @@ export class Qualifying {
   @Column()
   laps: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 15 })
   fast_lap: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 15 })
   average_speed: string;
 }

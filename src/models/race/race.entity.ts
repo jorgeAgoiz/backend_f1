@@ -14,18 +14,18 @@ export class Race {
   @Column()
   laps_disputed: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 15 })
   average_speed: string;
 
   @Column()
   num_pit_stops: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 18 })
   total_time: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 120 })
   retired: string;
 
   @Column()
-  race_points: string;
+  race_points: number;
 }

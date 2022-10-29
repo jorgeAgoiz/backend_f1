@@ -9,7 +9,7 @@ export class QualifyingService {
     @InjectRepository(Qualifying) private repo: Repository<Qualifying>,
   ) {}
 
-  async getAll() {
+  async getAll(): Promise<Array<Qualifying>> {
     const qfSessions: Array<Qualifying> = await this.repo.find();
     return qfSessions;
   }

@@ -1,3 +1,4 @@
+import { fastLapStringToMiliseconds } from 'src/common/helpers/dates.helpers';
 import { GrandPrix } from 'src/models/grand-prix/grand-prix.entity';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
@@ -17,9 +18,35 @@ export class FreePractice {
   @Column()
   laps: number;
 
-  @Column({ length: 15 })
+  @Column({
+    type: 'varchar',
+    length: 15,
+    transformer: {
+      to(value) {
+        return value;
+      },
+      from(value) {
+        if (value !== 'no register') {
+          return fastLapStringToMiliseconds(value);
+        } else {
+          return value;
+        }
+      },
+    },
+  })
   fast_lap: string;
 
-  @Column({ length: 15 })
+  @Column({
+    type: 'varchar',
+    length: 15,
+    transformer: {
+      to(value) {
+        return value;
+      },
+      from(value) {
+        return parseFloat(value);
+      },
+    },
+  })
   average_speed: string;
 }
