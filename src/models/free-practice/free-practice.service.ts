@@ -14,9 +14,7 @@ export class FreePracticeService {
   ) {}
 
   async getAll(): Promise<Array<FreePractice>> {
-    const fps: Array<FreePractice> = await this.repo.find({
-      relations: ['grand_prix', 'grand_prix.driver'],
-    });
+    const fps: Array<FreePractice> = await this.repo.find();
     return fps;
   }
 

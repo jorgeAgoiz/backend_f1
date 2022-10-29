@@ -1,5 +1,3 @@
-import { FreePractice } from '../free-practice.entity';
-
 export interface FPSByDriver {
   fp_grand_prix: number;
   fp_fp_number: number;

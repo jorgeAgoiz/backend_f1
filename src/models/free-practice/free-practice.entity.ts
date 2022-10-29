@@ -18,35 +18,9 @@ export class FreePractice {
   @Column()
   laps: number;
 
-  @Column({
-    type: 'varchar',
-    length: 15,
-    transformer: {
-      to(value) {
-        return value;
-      },
-      from(value) {
-        if (value !== 'no register') {
-          return fastLapStringToMiliseconds(value);
-        } else {
-          return value;
-        }
-      },
-    },
-  })
+  @Column({ type: 'varchar', length: 15 })
   fast_lap: string;
 
-  @Column({
-    type: 'varchar',
-    length: 15,
-    transformer: {
-      to(value) {
-        return value;
-      },
-      from(value) {
-        return parseFloat(value);
-      },
-    },
-  })
+  @Column({ type: 'varchar', length: 15 })
   average_speed: string;
 }
