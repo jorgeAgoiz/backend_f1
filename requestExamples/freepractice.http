@@ -9,3 +9,8 @@ GET http://localhost:3000/free-practice/avg-speed/driver/6 HTTP/1.1
 ###
 
 GET http://localhost:3000/free-practice/fps/driver/12 HTTP/1.1
+
+###
+
+
+GET http://localhost:3000/free-practice/fast-laps?driverId=5&circuitId=2 HTTP/1.1

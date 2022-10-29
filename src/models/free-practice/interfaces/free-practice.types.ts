@@ -20,3 +20,13 @@ export interface AVGSpeedByDriver {
   circuit_id: number;
   circuit_circuit_name: string;
 }
+
+export interface FLByDriverAndCircuitReq {
+  driverId: string;
+  circuitId: string;
+}
+
+export interface FLByDriverAndCircuitRes {
+  circuit_circuit_name: string;
+  fp_fast_lap?: number;
+}
