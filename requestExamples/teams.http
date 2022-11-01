@@ -1,6 +1,10 @@
 ### TEAMS
 
-GET http://localhost:3000/teams?country=reino%20unido HTTP/1.1
+GET http://localhost:3000/teams HTTP/1.1
+
+###
+
+GET http://localhost:3000/teams/8 HTTP/1.1
 
 ###
 
