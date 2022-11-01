@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Qualify } from './interfaces/qualifying.types';
+import { AVGSpeedByDriver, Qualify } from './interfaces/qualifying.types';
 import { Qualifying } from './qualifying.entity';
 
 @Injectable()
@@ -115,5 +115,25 @@ export class QualifyingService {
       throw new NotFoundException('Driver data not found.');
     }
     return qfData;
+  }
+
+  async getAvgSpeedByDriver(id: number): Promise<Array<AVGSpeedByDriver>> {
+    const avgSpeedInfo: Array<AVGSpeedByDriver> = await this.repo
+      .createQueryBuilder('qf')
+      .innerJoin('qf.grand_prix', 'gp')
+      .innerJoin('gp.driver', 'driver')
+      .innerJoin('gp.circuit', 'circuit')
+      .innerJoin('gp.team', 'team')
+      .where('driver.id = :id', { id })
+      .select(['qf.average_speed', 'qf.qf_number', 'circuit.circuit_name'])
+      .orderBy({
+        'qf.grand_prix': 'ASC',
+        'qf.qf_number': 'ASC',
+      })
+      .getRawMany();
+    if (!avgSpeedInfo || avgSpeedInfo.length < 1) {
+      throw new NotFoundException('Driver data not found.');
+    }
+    return avgSpeedInfo;
   }
 }

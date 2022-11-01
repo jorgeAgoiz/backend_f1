@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Transform } from 'class-transformer';
 import { fastLapStringToMiliseconds } from 'src/common/helpers/dates.helpers';
 
-export class QualifiyingByDto {
+export class QualifyingByDto {
   @Expose()
   @ApiProperty()
   qf_grand_prix: number;
