@@ -12,21 +12,19 @@ export interface FPSByDriver {
 }
 
 export interface AVGSpeedByDriver {
-  fp_grand_prix: number;
+  circuit_circuit_name: string;
   fp_fp_number: number;
-  fp_average_speed: number;
-  driver_id: number;
-  driver_name: string;
-  circuit_id: number;
-  circuit_circuit_name: string;
+  fp_average_speed?: number;
 }
 
-export interface FLByDriverAndCircuitReq {
-  driverId: string;
-  circuitId: string;
-}
-
-export interface FLByDriverAndCircuitRes {
+export interface LapsTimeByDriver {
   circuit_circuit_name: string;
+  fp_fp_number: number;
   fp_fast_lap?: number;
+}
+
+export interface PositionsByDriver {
+  circuit_circuit_name: string;
+  fp_fp_number: number;
+  fp_position?: number;
 }

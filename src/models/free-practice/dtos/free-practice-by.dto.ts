@@ -2,22 +2,22 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Transform } from 'class-transformer';
 import { fastLapStringToMiliseconds } from 'src/common/helpers/dates.helpers';
 
-export class FreePracticeDto {
+export class FreePracticeBy {
   @Expose()
   @ApiProperty()
-  grand_prix: number;
+  fp_grand_prix: number;
 
   @Expose()
   @ApiProperty()
-  fp_number: number;
+  fp_fp_number: number;
 
   @Expose()
   @ApiProperty()
-  position: number;
+  fp_position: number;
 
   @Expose()
   @ApiProperty()
-  laps: number;
+  fp_laps: number;
 
   @Expose()
   @ApiProperty()
@@ -27,10 +27,34 @@ export class FreePracticeDto {
     }
     return data.value;
   })
-  fast_lap: string;
+  fp_fast_lap: string;
 
   @Expose()
   @ApiProperty()
   @Transform((data) => parseFloat(data.value))
-  average_speed: string;
+  fp_average_speed: string;
+
+  @Expose()
+  @ApiProperty()
+  driver_id: number;
+
+  @Expose()
+  @ApiProperty()
+  driver_name: string;
+
+  @Expose()
+  @ApiProperty()
+  circuit_id: number;
+
+  @Expose()
+  @ApiProperty()
+  circuit_circuit_name: string;
+
+  @Expose()
+  @ApiProperty()
+  team_name: string;
+
+  @Expose()
+  @ApiProperty()
+  team_id: number;
 }
