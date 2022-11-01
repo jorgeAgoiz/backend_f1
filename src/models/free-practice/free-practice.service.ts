@@ -42,6 +42,11 @@ export class FreePracticeService {
         'team.name',
         'team.id',
       ])
+      .orderBy({
+        'fp.grand_prix': 'ASC',
+        'fp.fp_number': 'ASC',
+        'fp.position': 'ASC',
+      })
       .getRawMany();
     if (!fpsData || fpsData.length < 1) {
       throw new NotFoundException('Driver data not found.');
@@ -72,6 +77,7 @@ export class FreePracticeService {
         'team.id',
       ])
       .orderBy({
+        'fp.grand_prix': 'ASC',
         'fp.fp_number': 'ASC',
         'fp.position': 'ASC',
       })
@@ -105,6 +111,7 @@ export class FreePracticeService {
         'team.id',
       ])
       .orderBy({
+        'fp.grand_prix': 'ASC',
         'fp.fp_number': 'ASC',
         'fp.position': 'ASC',
       })

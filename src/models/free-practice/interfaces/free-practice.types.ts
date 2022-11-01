@@ -3,8 +3,8 @@ export interface FPSByDriver {
   fp_fp_number: number;
   fp_position: number;
   fp_laps: number;
-  fp_fast_lap: string;
-  fp_average_speed: string;
+  fp_fast_lap: number;
+  fp_average_speed: number;
   driver_id: number;
   driver_name: string;
   circuit_id: number;
