@@ -16,6 +16,7 @@ import { GridModule } from './models/grid/grid.module';
 import { SprintModule } from './models/sprint/sprint.module';
 import { RaceModule } from './models/race/race.module';
 import { FastLapModule } from './models/fast-lap/fast-lap.module';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
@@ -36,6 +37,17 @@ import { FastLapModule } from './models/fast-lap/fast-lap.module';
         logLevels: [logLevels.debug],
       }),
       inject: [ConfigService],
+    }),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            messageKey: 'message',
+          },
+        },
+        messageKey: 'message',
+      },
     }),
     DriversModule,
     CircuitsModule,
