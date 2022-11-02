@@ -1,11 +1,11 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { FreePracticeAvgSpeedDto } from './dtos/free-practice-avg-speed.dto';
-import { FreePracticeDto } from './dtos/free-practice.dto';
+import { FPAvgSpeedDto } from './dtos/fp-avg-speed.dto';
+import { FreePracticeDto } from './dtos/fp.dto';
 import { FreePracticeService } from './free-practice.service';
 import { Serialize } from '../../common/interceptors/basic.interceptor';
-import { FreePracticeBy } from './dtos/free-practice-by.dto';
-import { FreePracticeLapsDto } from './dtos/free-practice-laps.dto';
+import { FPBy } from './dtos/fp-by.dto';
+import { FPLapTimesDto } from './dtos/fp-laps.dto';
 
 @ApiTags('Free Practice Session')
 @Controller('free-practice')
@@ -18,31 +18,31 @@ export class FreePracticeController {
     return this.freePracticeService.getAll();
   }
 
-  @Serialize(FreePracticeBy)
+  @Serialize(FPBy)
   @Get('/driver/:id')
   getAllFpsByDriver(@Param('id') id: string) {
     return this.freePracticeService.getAllFpsByDriver(parseInt(id));
   }
 
-  @Serialize(FreePracticeBy)
+  @Serialize(FPBy)
   @Get('/circuit/:id')
   getAllFpsByCircuit(@Param('id') id: string) {
     return this.freePracticeService.getAllFpsByCircuit(parseInt(id));
   }
 
-  @Serialize(FreePracticeBy)
+  @Serialize(FPBy)
   @Get('/team/:id')
   getAllFpsByTeam(@Param('id') id: string) {
     return this.freePracticeService.getAllFpsByTeam(parseInt(id));
   }
 
-  @Serialize(FreePracticeAvgSpeedDto)
+  @Serialize(FPAvgSpeedDto)
   @Get('/avg-speed/driver/:id')
   getAverageSpeedFreePracticesByDriver(@Param('id') id: string) {
     return this.freePracticeService.getAvgSpeedByDriver(parseInt(id));
   }
 
-  @Serialize(FreePracticeLapsDto)
+  @Serialize(FPLapTimesDto)
   @Get('/laps-time/driver/:id')
   getLapTimesByDriver(@Param('id') id: string) {
     return this.freePracticeService.getLapsTimeByDriver(parseInt(id));

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose, Transform } from 'class-transformer';
+import { Expose } from 'class-transformer';
 
-export class FreePracticeAvgSpeedDto {
+export class FPPositionsDto {
   @Expose()
   @ApiProperty()
   circuit_circuit_name: string;
@@ -12,6 +12,5 @@ export class FreePracticeAvgSpeedDto {
 
   @Expose()
   @ApiProperty()
-  @Transform((data) => parseFloat(data.value))
-  fp_average_speed: number;
+  fp_position: number;
 }

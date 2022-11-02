@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsString } from 'class-validator';
 
-export class CreateFreePracticeDto {
+export class FPCreateDto {
   @IsNumber()
   @ApiProperty()
   grand_prix: number;
@@ -24,5 +24,5 @@ export class CreateFreePracticeDto {
 
   @IsString()
   @ApiProperty()
-  average_speed: number;
+  average_speed: string;
 }

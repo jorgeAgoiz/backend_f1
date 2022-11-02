@@ -1,4 +1,3 @@
-import { fastLapStringToMiliseconds } from 'src/common/helpers/dates.helpers';
 import { GrandPrix } from 'src/models/grand-prix/grand-prix.entity';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 

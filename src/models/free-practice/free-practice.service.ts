@@ -1,13 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FreePractice } from './free-practice.entity';
-import {
-  AVGSpeedByDriver,
-  FPSByDriver,
-  LapsTimeByDriver,
-  PositionsByDriver,
-} from './interfaces/free-practice.types';
+import { FPBy } from './dtos/fp-by.dto';
+import { FPAvgSpeedDto } from './dtos/fp-avg-speed.dto';
+import { FPLapTimesDto } from './dtos/fp-laps.dto';
+import { FPPositionsDto } from './dtos/fp-positions-by.dto';
 
 @Injectable()
 export class FreePracticeService {
@@ -16,12 +18,19 @@ export class FreePracticeService {
   ) {}
 
   async getAll(): Promise<Array<FreePractice>> {
-    const fps: Array<FreePractice> = await this.repo.find();
-    return fps;
+    const fpsData: Array<FreePractice> = await this.repo.find();
+
+    if (!fpsData) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (fpsData.length < 1) {
+      throw new NotFoundException('Driver data not found.');
+    }
+    return fpsData;
   }
 
-  async getAllFpsByDriver(id: number): Promise<Array<FPSByDriver>> {
-    const fpsData: Array<FPSByDriver> = await this.repo
+  async getAllFpsByDriver(id: number): Promise<Array<FPBy>> {
+    const driverFpsData: Array<FPBy> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -48,14 +57,18 @@ export class FreePracticeService {
         'fp.position': 'ASC',
       })
       .getRawMany();
-    if (!fpsData || fpsData.length < 1) {
+
+    if (!driverFpsData) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (driverFpsData.length < 1) {
       throw new NotFoundException('Driver data not found.');
     }
-    return fpsData;
+    return driverFpsData;
   }
 
-  async getAllFpsByCircuit(id: number): Promise<Array<FPSByDriver>> {
-    const fpsData: Array<FPSByDriver> = await this.repo
+  async getAllFpsByCircuit(id: number): Promise<Array<FPBy>> {
+    const circuitFpsData: Array<FPBy> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -82,14 +95,18 @@ export class FreePracticeService {
         'fp.position': 'ASC',
       })
       .getRawMany();
-    if (!fpsData || fpsData.length < 1) {
+
+    if (!circuitFpsData) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (circuitFpsData.length < 1) {
       throw new NotFoundException('Driver data not found.');
     }
-    return fpsData;
+    return circuitFpsData;
   }
 
-  async getAllFpsByTeam(id: number): Promise<Array<FPSByDriver>> {
-    const fpsData: Array<FPSByDriver> = await this.repo
+  async getAllFpsByTeam(id: number): Promise<Array<FPBy>> {
+    const teamFpsData: Array<FPBy> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -116,14 +133,18 @@ export class FreePracticeService {
         'fp.position': 'ASC',
       })
       .getRawMany();
-    if (!fpsData || fpsData.length < 1) {
+
+    if (!teamFpsData) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (teamFpsData.length < 1) {
       throw new NotFoundException('Driver data not found.');
     }
-    return fpsData;
+    return teamFpsData;
   }
 
-  async getAvgSpeedByDriver(id: number): Promise<Array<AVGSpeedByDriver>> {
-    const avgSpeedInfo: Array<AVGSpeedByDriver> = await this.repo
+  async getAvgSpeedByDriver(id: number): Promise<Array<FPAvgSpeedDto>> {
+    const averageSpeeds: Array<FPAvgSpeedDto> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -131,14 +152,18 @@ export class FreePracticeService {
       .where('driver.id = :id', { id })
       .select(['fp.average_speed', 'fp.fp_number', 'circuit.circuit_name'])
       .getRawMany();
-    if (!avgSpeedInfo || avgSpeedInfo.length < 1) {
+
+    if (!averageSpeeds) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (averageSpeeds.length < 1) {
       throw new NotFoundException('Driver data not found.');
     }
-    return avgSpeedInfo;
+    return averageSpeeds;
   }
 
-  async getLapsTimeByDriver(id: number): Promise<Array<LapsTimeByDriver>> {
-    const lapsTimes: Array<LapsTimeByDriver> = await this.repo
+  async getLapsTimeByDriver(id: number): Promise<Array<FPLapTimesDto>> {
+    const lapsTimes: Array<FPLapTimesDto> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -147,14 +172,18 @@ export class FreePracticeService {
       .select(['fp.fast_lap', 'fp.fp_number', 'circuit.circuit_name'])
       .orderBy('gp.circuit', 'ASC')
       .getRawMany();
-    if (!lapsTimes || lapsTimes.length < 1) {
+
+    if (!lapsTimes) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (lapsTimes.length < 1) {
       throw new NotFoundException('Driver data not found.');
     }
     return lapsTimes;
   }
 
-  async getPositionsByDriver(id: number): Promise<Array<PositionsByDriver>> {
-    const positionInfo: Array<PositionsByDriver> = await this.repo
+  async getPositionsByDriver(id: number): Promise<Array<FPPositionsDto>> {
+    const positions: Array<FPPositionsDto> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -163,9 +192,13 @@ export class FreePracticeService {
       .select(['circuit.circuit_name', 'fp.position', 'fp.fp_number'])
       .orderBy('gp.circuit', 'ASC')
       .getRawMany();
-    if (!positionInfo || positionInfo.length < 1) {
+
+    if (!positions) {
+      throw new BadRequestException('Something went wrong');
+    }
+    if (positions.length < 1) {
       throw new NotFoundException('Driver data not found.');
     }
-    return positionInfo;
+    return positions;
   }
 }
