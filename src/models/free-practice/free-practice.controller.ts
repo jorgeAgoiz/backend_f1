@@ -44,7 +44,7 @@ export class FreePracticeController {
 
   @Serialize(FreePracticeLapsDto)
   @Get('/laps-time/driver/:id')
-  getFLByDriverAndDriver(@Param('id') id: string) {
+  getLapTimesByDriver(@Param('id') id: string) {
     return this.freePracticeService.getLapsTimeByDriver(parseInt(id));
   }
 

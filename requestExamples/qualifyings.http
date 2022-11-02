@@ -17,3 +17,11 @@ GET http://localhost:3000/qualifying/team/3 HTTP/1.1
 ###
 
 GET http://localhost:3000/qualifying/avg-speed/driver/3 HTTP/1.1
+
+###
+
+GET http://localhost:3000/qualifying/laps-time/driver/3 HTTP/1.1
+
+###
+
+GET http://localhost:3000/qualifying/positions/driver/3 HTTP/1.1

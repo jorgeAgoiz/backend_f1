@@ -1,7 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AVGSpeedByDriver, Qualify } from './interfaces/qualifying.types';
+import {
+  AVGSpeedByDriver,
+  LapsTimeByDriver,
+  Qualify,
+  PositionsByDriver,
+} from './interfaces/qualifying.types';
 import { Qualifying } from './qualifying.entity';
 
 @Injectable()
@@ -135,5 +140,45 @@ export class QualifyingService {
       throw new NotFoundException('Driver data not found.');
     }
     return avgSpeedInfo;
+  }
+
+  async getLapsTimeByDriver(id: number): Promise<Array<LapsTimeByDriver>> {
+    const lapsTimes: Array<LapsTimeByDriver> = await this.repo
+      .createQueryBuilder('qf')
+      .innerJoin('qf.grand_prix', 'gp')
+      .innerJoin('gp.driver', 'driver')
+      .innerJoin('gp.circuit', 'circuit')
+      .innerJoin('gp.team', 'team')
+      .where('driver.id = :id', { id })
+      .select(['qf.fast_lap', 'qf.qf_number', 'circuit.circuit_name'])
+      .orderBy({
+        'gp.circuit': 'ASC',
+        'qf.qf_number': 'ASC',
+      })
+      .getRawMany();
+    if (!lapsTimes || lapsTimes.length < 1) {
+      throw new NotFoundException('Driver data not found.');
+    }
+    return lapsTimes;
+  }
+
+  async getPositionsByDriver(id: number): Promise<Array<PositionsByDriver>> {
+    const positionInfo: Array<PositionsByDriver> = await this.repo
+      .createQueryBuilder('qf')
+      .innerJoin('qf.grand_prix', 'gp')
+      .innerJoin('gp.driver', 'driver')
+      .innerJoin('gp.circuit', 'circuit')
+      .innerJoin('gp.team', 'team')
+      .where('driver.id = :id', { id })
+      .select(['qf.position', 'qf.qf_number', 'circuit.circuit_name'])
+      .orderBy({
+        'gp.circuit': 'ASC',
+        'qf.qf_number': 'ASC',
+      })
+      .getRawMany();
+    if (!positionInfo || positionInfo.length < 1) {
+      throw new NotFoundException('Driver data not found.');
+    }
+    return positionInfo;
   }
 }
