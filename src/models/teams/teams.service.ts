@@ -31,7 +31,7 @@ export class TeamsService {
   }
 
   async insert({ name, country, url_logo }: CreateTeamDto): Promise<TeamDto> {
-    const newTeam: TeamDto = await this.repo.create({
+    const newTeam: Team = await this.repo.create({
       name,
       country,
       url_logo,

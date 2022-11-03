@@ -1,28 +1,49 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { Between, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Circuit } from './circuit.entity';
 import { CreateCircuitDto } from './dtos/create-circuit.dto';
+import { CircuitDto } from './dtos/circuit.dto';
+import { UpdateCircuitDto } from './dtos/update-circuit.dto';
+import { CircuitGetQueries } from './interfaces/circuit.types';
 
 @Injectable()
 export class CircuitsService {
   constructor(@InjectRepository(Circuit) private repo: Repository<Circuit>) {}
 
-  async getAll({ country, mindistance, maxdistance }) {
-    const circuits: Array<Circuit> = await this.repo.find({
-      where: { country },
-    });
+  async getAll({
+    country,
+    mindistance,
+    maxdistance,
+  }: CircuitGetQueries): Promise<Array<CircuitDto>> {
+    let minDistanceParsed = 0;
+    if (mindistance) {
+      minDistanceParsed = parseFloat(mindistance);
+    }
+    let maxDistanceParsed = 100;
+    if (maxdistance) {
+      maxDistanceParsed = parseFloat(maxdistance);
+    }
 
-    // CON ESTO HAY QUE HACER ALGO PARA PASARLO COMO FILTROS A LA QUERY
-    const minDistanceParsed = parseFloat(mindistance);
-    const maxDistanceParsed = parseFloat(maxdistance);
-    console.log({ minDistanceParsed, maxDistanceParsed });
-    // CON ESTO HAY QUE HACER ALGO PARA PASARLO COMO FILTROS A LA QUERY
+    const circuits: Array<CircuitDto> = await this.repo.find({
+      where: {
+        country,
+        distance: Between(minDistanceParsed, maxDistanceParsed),
+      },
+    });
+    if (!circuits) {
+      throw new NotFoundException('Teams data not found');
+    }
+
     return circuits;
   }
 
-  async getOneBy(id: number) {
-    const circuit: Circuit = await this.repo.findOneBy({ id });
+  async getOneBy(id: number): Promise<CircuitDto> {
+    const circuit: CircuitDto = await this.repo.findOneBy({ id });
     if (!circuit) {
       throw new NotFoundException('Circuit not found');
     }
@@ -35,7 +56,7 @@ export class CircuitsService {
     location,
     country,
     distance,
-  }: CreateCircuitDto) {
+  }: CreateCircuitDto): Promise<CircuitDto> {
     const newCircuit: Circuit = await this.repo.create({
       gp_name,
       circuit_name,
@@ -43,26 +64,26 @@ export class CircuitsService {
       country,
       distance,
     });
+    if (!newCircuit) {
+      throw new BadRequestException('Something went wrong.');
+    }
 
-    console.log(newCircuit);
-    /* return await this.repo.save(newCircuit) */
+    return await this.repo.save(newCircuit);
   }
 
-  async update(id: number, attrs: Partial<Circuit>) {
-    const circuit: Circuit = await this.repo.findOneBy({ id });
+  async update(id: number, attrs: UpdateCircuitDto): Promise<CircuitDto> {
+    const circuit: CircuitDto = await this.repo.findOneBy({ id });
     if (!circuit) {
       throw new NotFoundException('Driver not found');
     }
-    console.log(attrs);
-    /* return this.repo.save({...circuit, ...attrs}) */
+    return this.repo.save({ ...circuit, ...attrs });
   }
 
-  async delete(id: number) {
-    const circuit: Circuit = await this.repo.findOneBy({ id });
+  async delete(id: number): Promise<CircuitDto> {
+    const circuit: CircuitDto = await this.repo.findOneBy({ id });
     if (!circuit) {
       throw new NotFoundException('Driver not found');
     }
-    console.log(circuit);
-    /* return this.repo.remove(circuit) */
+    return this.repo.remove(circuit);
   }
 }
