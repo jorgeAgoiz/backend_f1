@@ -1,4 +1,133 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { GridByDto } from './dtos/grid-by.dto';
+import { Grid } from './grid.entity';
 
 @Injectable()
-export class GridService {}
+export class GridService {
+  constructor(@InjectRepository(Grid) private repo: Repository<Grid>) {}
+
+  async getAll(): Promise<Array<Grid>> {
+    const grids: Array<Grid> = await this.repo.find();
+    if (!grids) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    return grids;
+  }
+
+  async getAllGridsByType(type: string): Promise<Array<Grid>> {
+    const grids: Array<Grid> = await this.repo.findBy({ type_grid: type });
+    if (!grids) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    return grids;
+  }
+
+  async getAllGridsByDriver(id: number): Promise<Array<GridByDto>> {
+    const grids: Array<GridByDto> = await this.repo
+      .createQueryBuilder('grid')
+      .innerJoin('grid.grand_prix', 'gp')
+      .innerJoin('gp.driver', 'driver')
+      .innerJoin('gp.circuit', 'circuit')
+      .innerJoin('gp.team', 'team')
+      .where('driver.id = :id', { id })
+      .select([
+        'grid.grand_prix',
+        'grid.position',
+        'grid.type_grid',
+        'driver.name',
+        'driver.id',
+        'circuit.circuit_name',
+        'circuit.id',
+        'team.name',
+        'team.id',
+      ])
+      .orderBy({
+        'circuit.id': 'ASC',
+      })
+      .getRawMany();
+
+    if (!grids) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (grids.length < 1) {
+      throw new NotFoundException('Driver data not found.');
+    }
+
+    return grids;
+  }
+
+  async getAllGridsByCircuit(id: number) {
+    const grids: Array<GridByDto> = await this.repo
+      .createQueryBuilder('grid')
+      .innerJoin('grid.grand_prix', 'gp')
+      .innerJoin('gp.driver', 'driver')
+      .innerJoin('gp.circuit', 'circuit')
+      .innerJoin('gp.team', 'team')
+      .where('circuit.id = :id', { id })
+      .select([
+        'grid.grand_prix',
+        'grid.position',
+        'grid.type_grid',
+        'driver.name',
+        'driver.id',
+        'circuit.circuit_name',
+        'circuit.id',
+        'team.name',
+        'team.id',
+      ])
+      .orderBy({
+        'grid.position': 'ASC',
+      })
+      .getRawMany();
+
+    if (!grids) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (grids.length < 1) {
+      throw new NotFoundException('Circuit data not found.');
+    }
+
+    return grids;
+  }
+
+  async getAllGridsByTeam(id: number) {
+    const grids: Array<GridByDto> = await this.repo
+      .createQueryBuilder('grid')
+      .innerJoin('grid.grand_prix', 'gp')
+      .innerJoin('gp.driver', 'driver')
+      .innerJoin('gp.circuit', 'circuit')
+      .innerJoin('gp.team', 'team')
+      .where('team.id = :id', { id })
+      .select([
+        'grid.grand_prix',
+        'grid.position',
+        'grid.type_grid',
+        'driver.name',
+        'driver.id',
+        'circuit.circuit_name',
+        'circuit.id',
+        'team.name',
+        'team.id',
+      ])
+      .orderBy({
+        'circuit.id': 'ASC',
+        'grid.position': 'ASC',
+      })
+      .getRawMany();
+
+    if (!grids) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (grids.length < 1) {
+      throw new NotFoundException('Team data not found.');
+    }
+
+    return grids;
+  }
+}

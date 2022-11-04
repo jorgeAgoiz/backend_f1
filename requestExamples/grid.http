@@ -1,0 +1,19 @@
+### GRIDS
+
+GET http://localhost:3000/grid HTTP/1.1
+
+###
+
+GET http://localhost:3000/grid/type-grid/sprint_race HTTP/1.1
+
+###
+
+GET http://localhost:3000/grid/driver/10 HTTP/1.1
+
+###
+
+GET http://localhost:3000/grid/circuit/10 HTTP/1.1
+
+###
+
+GET http://localhost:3000/grid/team/8 HTTP/1.1
