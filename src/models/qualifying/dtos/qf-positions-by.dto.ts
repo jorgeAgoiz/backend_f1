@@ -1,16 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { IsNumber, IsString } from 'class-validator';
 
 export class QFPositionsDto {
-  @Expose()
   @ApiProperty()
+  @IsString()
   circuit_circuit_name: string;
 
-  @Expose()
   @ApiProperty()
+  @IsNumber()
   qf_qf_number: number;
 
-  @Expose()
   @ApiProperty()
+  @IsNumber()
   qf_position: number;
 }
