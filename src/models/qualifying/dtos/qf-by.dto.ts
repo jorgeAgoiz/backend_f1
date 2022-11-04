@@ -2,22 +2,22 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Transform } from 'class-transformer';
 import { fastLapStringToMiliseconds } from 'src/common/helpers/dates.helpers';
 
-export class QualifyingDto {
+export class QFByDto {
   @Expose()
   @ApiProperty()
-  grand_prix: number;
+  qf_grand_prix: number;
 
   @Expose()
   @ApiProperty()
-  qf_number: number;
+  qf_qf_number: number;
 
   @Expose()
   @ApiProperty()
-  position: number;
+  qf_position: number;
 
   @Expose()
   @ApiProperty()
-  laps: number;
+  qf_laps: number;
 
   @Expose()
   @ApiProperty()
@@ -27,10 +27,34 @@ export class QualifyingDto {
     }
     return data.value;
   })
-  fast_lap: number;
+  qf_fast_lap: number;
 
   @Expose()
   @ApiProperty()
   @Transform((data) => parseFloat(data.value))
-  average_speed: number;
+  qf_average_speed: number;
+
+  @Expose()
+  @ApiProperty()
+  driver_id: number;
+
+  @Expose()
+  @ApiProperty()
+  driver_name: string;
+
+  @Expose()
+  @ApiProperty()
+  circuit_id: number;
+
+  @Expose()
+  @ApiProperty()
+  circuit_circuit_name: string;
+
+  @Expose()
+  @ApiProperty()
+  team_name: string;
+
+  @Expose()
+  @ApiProperty()
+  team_id: number;
 }

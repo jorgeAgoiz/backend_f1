@@ -1,9 +1,9 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Serialize } from 'src/common/interceptors/basic.interceptor';
-import { QualifyingAvgSpeedDto } from './dtos/qualifying-avg-speed.dto';
-import { QualifyingByDto } from './dtos/qualifying-by.dto';
-import { QualifyingLapsDto } from './dtos/qualifying-laps.dto';
+import { QFAvgSpeedDto } from './dtos/qf-avg-speed.dto';
+import { QFByDto } from './dtos/qf-by.dto';
+import { QFLapsDto } from './dtos/qf-laps.dto';
 import { QualifyingDto } from './dtos/qualifying.dto';
 import { QualifyingService } from './qualifying.service';
 
@@ -18,31 +18,31 @@ export class QualifyingController {
     return this.qualifyingService.getAll();
   }
 
-  @Serialize(QualifyingByDto)
+  @Serialize(QFByDto)
   @Get('/driver/:id')
   getQualifyingsByDriver(@Param('id') id: string) {
     return this.qualifyingService.getAllQfByDriver(parseInt(id));
   }
 
-  @Serialize(QualifyingByDto)
+  @Serialize(QFByDto)
   @Get('/circuit/:id')
   getQualifyingsByCircuit(@Param('id') id: string) {
     return this.qualifyingService.getAllQfByCircuit(parseInt(id));
   }
 
-  @Serialize(QualifyingByDto)
+  @Serialize(QFByDto)
   @Get('/team/:id')
   getQualifyingsByTeam(@Param('id') id: string) {
     return this.qualifyingService.getAllQfByTeam(parseInt(id));
   }
 
-  @Serialize(QualifyingAvgSpeedDto)
+  @Serialize(QFAvgSpeedDto)
   @Get('/avg-speed/driver/:id')
   getAverageSpeedQualifyingsByDriver(@Param('id') id: string) {
     return this.qualifyingService.getAvgSpeedByDriver(parseInt(id));
   }
 
-  @Serialize(QualifyingLapsDto)
+  @Serialize(QFLapsDto)
   @Get('/laps-time/driver/:id')
   getLapsTimeByDriver(@Param('id') id: string) {
     return this.qualifyingService.getLapsTimeByDriver(parseInt(id));

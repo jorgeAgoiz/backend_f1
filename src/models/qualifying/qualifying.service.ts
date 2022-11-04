@@ -1,12 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import {
-  AVGSpeedByDriver,
-  LapsTimeByDriver,
-  Qualify,
-  PositionsByDriver,
-} from './interfaces/qualifying.types';
+import { QFAvgSpeedDto } from './dtos/qf-avg-speed.dto';
+import { QFByDto } from './dtos/qf-by.dto';
+import { QFLapsDto } from './dtos/qf-laps.dto';
+import { QFPositionsDto } from './dtos/qf-positions-by.dto';
 import { Qualifying } from './qualifying.entity';
 
 @Injectable()
@@ -16,12 +18,18 @@ export class QualifyingService {
   ) {}
 
   async getAll(): Promise<Array<Qualifying>> {
-    const qfSessions: Array<Qualifying> = await this.repo.find();
-    return qfSessions;
+    const qfsData: Array<Qualifying> = await this.repo.find();
+    if (!qfsData) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (qfsData.length < 1) {
+      throw new NotFoundException('Driver data not found.');
+    }
+    return qfsData;
   }
 
-  async getAllQfByDriver(id: number): Promise<Array<Qualify>> {
-    const qfData: Array<Qualify> = await this.repo
+  async getAllQfByDriver(id: number): Promise<Array<QFByDto>> {
+    const driverQfData: Array<QFByDto> = await this.repo
       .createQueryBuilder('qf')
       .innerJoin('qf.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -48,14 +56,17 @@ export class QualifyingService {
         'qf.position': 'ASC',
       })
       .getRawMany();
-    if (!qfData || qfData.length < 1) {
+    if (!driverQfData) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (driverQfData.length < 1) {
       throw new NotFoundException('Driver data not found.');
     }
-    return qfData;
+    return driverQfData;
   }
 
-  async getAllQfByCircuit(id: number): Promise<Array<Qualify>> {
-    const qfData: Array<Qualify> = await this.repo
+  async getAllQfByCircuit(id: number): Promise<Array<QFByDto>> {
+    const circuitQfData: Array<QFByDto> = await this.repo
       .createQueryBuilder('qf')
       .innerJoin('qf.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -82,14 +93,17 @@ export class QualifyingService {
         'qf.position': 'ASC',
       })
       .getRawMany();
-    if (!qfData || qfData.length < 1) {
+    if (!circuitQfData) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (circuitQfData.length < 1) {
       throw new NotFoundException('Driver data not found.');
     }
-    return qfData;
+    return circuitQfData;
   }
 
-  async getAllQfByTeam(id: number): Promise<Array<Qualify>> {
-    const qfData: Array<Qualify> = await this.repo
+  async getAllQfByTeam(id: number): Promise<Array<QFByDto>> {
+    const teamQfData: Array<QFByDto> = await this.repo
       .createQueryBuilder('qf')
       .innerJoin('qf.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -116,14 +130,17 @@ export class QualifyingService {
         'qf.position': 'ASC',
       })
       .getRawMany();
-    if (!qfData || qfData.length < 1) {
+    if (!teamQfData) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (teamQfData.length < 1) {
       throw new NotFoundException('Driver data not found.');
     }
-    return qfData;
+    return teamQfData;
   }
 
-  async getAvgSpeedByDriver(id: number): Promise<Array<AVGSpeedByDriver>> {
-    const avgSpeedInfo: Array<AVGSpeedByDriver> = await this.repo
+  async getAvgSpeedByDriver(id: number): Promise<Array<QFAvgSpeedDto>> {
+    const averageSpeeds: Array<QFAvgSpeedDto> = await this.repo
       .createQueryBuilder('qf')
       .innerJoin('qf.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -136,14 +153,17 @@ export class QualifyingService {
         'qf.qf_number': 'ASC',
       })
       .getRawMany();
-    if (!avgSpeedInfo || avgSpeedInfo.length < 1) {
+    if (!averageSpeeds) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (averageSpeeds.length < 1) {
       throw new NotFoundException('Driver data not found.');
     }
-    return avgSpeedInfo;
+    return averageSpeeds;
   }
 
-  async getLapsTimeByDriver(id: number): Promise<Array<LapsTimeByDriver>> {
-    const lapsTimes: Array<LapsTimeByDriver> = await this.repo
+  async getLapsTimeByDriver(id: number): Promise<Array<QFLapsDto>> {
+    const lapsTimes: Array<QFLapsDto> = await this.repo
       .createQueryBuilder('qf')
       .innerJoin('qf.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -156,14 +176,17 @@ export class QualifyingService {
         'qf.qf_number': 'ASC',
       })
       .getRawMany();
-    if (!lapsTimes || lapsTimes.length < 1) {
+    if (!lapsTimes) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (lapsTimes.length < 1) {
       throw new NotFoundException('Driver data not found.');
     }
     return lapsTimes;
   }
 
-  async getPositionsByDriver(id: number): Promise<Array<PositionsByDriver>> {
-    const positionInfo: Array<PositionsByDriver> = await this.repo
+  async getPositionsByDriver(id: number): Promise<Array<QFPositionsDto>> {
+    const positions: Array<QFPositionsDto> = await this.repo
       .createQueryBuilder('qf')
       .innerJoin('qf.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -176,9 +199,12 @@ export class QualifyingService {
         'qf.qf_number': 'ASC',
       })
       .getRawMany();
-    if (!positionInfo || positionInfo.length < 1) {
+    if (!positions) {
+      throw new BadRequestException('Something went wrong');
+    }
+    if (positions.length < 1) {
       throw new NotFoundException('Driver data not found.');
     }
-    return positionInfo;
+    return positions;
   }
 }
