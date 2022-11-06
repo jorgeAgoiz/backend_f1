@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,9 +13,11 @@ import { UpdateTeamDto } from './dtos/update-team.dto';
 
 @Injectable()
 export class TeamsService {
+  private readonly logger = new Logger();
   constructor(@InjectRepository(Team) private repo: Repository<Team>) {}
 
   async getAll(country: string): Promise<Array<TeamDto>> {
+    this.logger.log('Get All Teams');
     const teams: Array<TeamDto> = await this.repo.find({ where: { country } });
     if (!teams) {
       throw new NotFoundException('Teams data not found');
@@ -23,6 +26,7 @@ export class TeamsService {
   }
 
   async getOneBy(id: number): Promise<TeamDto> {
+    this.logger.log('Get A Team By ID');
     const team: TeamDto = await this.repo.findOneBy({ id });
     if (!team) {
       throw new NotFoundException('Team not found');
@@ -31,6 +35,7 @@ export class TeamsService {
   }
 
   async insert({ name, country, url_logo }: CreateTeamDto): Promise<TeamDto> {
+    this.logger.log('Insert New Team');
     const newTeam: Team = await this.repo.create({
       name,
       country,
@@ -43,6 +48,7 @@ export class TeamsService {
   }
 
   async update(id: number, attrs: UpdateTeamDto): Promise<TeamDto> {
+    this.logger.log('Update A Team');
     const team: TeamDto = await this.repo.findOneBy({ id });
     if (!team) {
       throw new NotFoundException('Team not found');
@@ -51,6 +57,7 @@ export class TeamsService {
   }
 
   async remove(id: number): Promise<TeamDto> {
+    this.logger.log('Delete A Team');
     const team: TeamDto = await this.repo.findOneBy({ id });
     if (!team) {
       throw new NotFoundException('Team not found');

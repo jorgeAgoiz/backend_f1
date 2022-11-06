@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DriversModule } from './models/drivers/drivers.module';
 import { CircuitsModule } from './models/circuits/circuits.module';
@@ -17,6 +17,9 @@ import { SprintModule } from './models/sprint/sprint.module';
 import { RaceModule } from './models/race/race.module';
 import { FastLapModule } from './models/fast-lap/fast-lap.module';
 import { LoggerModule } from 'nestjs-pino';
+import { CorrelationIdMiddleware } from './common/middlewares/correlation-id.middleware';
+import { Request } from 'express';
+import { CORRELATION_ID } from './common/constants/logger';
 
 @Module({
   imports: [
@@ -68,4 +71,8 @@ import { LoggerModule } from 'nestjs-pino';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CorrelationIdMiddleware).forRoutes('*');
+  }
+}
