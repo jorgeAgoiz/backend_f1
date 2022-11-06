@@ -3,32 +3,53 @@ import { Expose, Transform } from 'class-transformer';
 import { IsNumber, IsString } from 'class-validator';
 import { timeStringToMiliseconds } from 'src/common/helpers/dates.helpers';
 
-export class FLByDto {
+export class RaceByDto {
   @Expose()
   @ApiProperty()
   @IsNumber()
-  fl_grand_prix: number;
+  race_grand_prix: number;
 
   @Expose()
   @ApiProperty()
   @IsNumber()
-  fl_fl_session: string;
+  race_position: number;
+
+  @Expose()
+  @ApiProperty()
+  @IsNumber()
+  race_laps_disputed: number;
+
+  @Expose()
+  @ApiProperty()
+  @Transform((data) => parseFloat(data.value))
+  @IsNumber()
+  race_average_speed: number;
+
+  @Expose()
+  @ApiProperty()
+  @IsNumber()
+  race_num_pit_stops: number;
 
   @Expose()
   @ApiProperty()
   @Transform((data) => {
     if (data.value !== 'no register') {
-      return timeStringToMiliseconds({ value: data.value, type: 'lap' });
+      return timeStringToMiliseconds({ value: data.value, type: 'total' });
     }
     return data.value;
   })
   @IsNumber()
-  fl_time: number;
+  race_total_time: number;
+
+  @Expose()
+  @ApiProperty()
+  @IsString()
+  race_retired: string;
 
   @Expose()
   @ApiProperty()
   @IsNumber()
-  fl_lap: number;
+  race_race_points: number;
 
   @Expose()
   @ApiProperty()

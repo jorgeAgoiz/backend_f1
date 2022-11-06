@@ -3,60 +3,51 @@ import { Expose, Transform } from 'class-transformer';
 import { IsNumber, IsString } from 'class-validator';
 import { timeStringToMiliseconds } from 'src/common/helpers/dates.helpers';
 
-export class FLByDto {
+export class RaceDto {
   @Expose()
   @ApiProperty()
   @IsNumber()
-  fl_grand_prix: number;
+  grand_prix: number;
 
   @Expose()
   @ApiProperty()
   @IsNumber()
-  fl_fl_session: string;
+  position: number;
+
+  @Expose()
+  @ApiProperty()
+  @IsNumber()
+  laps_disputed: number;
+
+  @Expose()
+  @ApiProperty()
+  @Transform((data) => parseFloat(data.value))
+  @IsNumber()
+  average_speed: number;
+
+  @Expose()
+  @ApiProperty()
+  @IsNumber()
+  num_pit_stops: number;
 
   @Expose()
   @ApiProperty()
   @Transform((data) => {
     if (data.value !== 'no register') {
-      return timeStringToMiliseconds({ value: data.value, type: 'lap' });
+      return timeStringToMiliseconds({ value: data.value, type: 'total' });
     }
     return data.value;
   })
   @IsNumber()
-  fl_time: number;
-
-  @Expose()
-  @ApiProperty()
-  @IsNumber()
-  fl_lap: number;
-
-  @Expose()
-  @ApiProperty()
-  @IsNumber()
-  driver_id: number;
+  total_time: number;
 
   @Expose()
   @ApiProperty()
   @IsString()
-  driver_name: string;
+  retired: string;
 
   @Expose()
   @ApiProperty()
   @IsNumber()
-  circuit_id: number;
-
-  @Expose()
-  @ApiProperty()
-  @IsString()
-  circuit_circuit_name: string;
-
-  @Expose()
-  @ApiProperty()
-  @IsString()
-  team_name: string;
-
-  @Expose()
-  @ApiProperty()
-  @IsNumber()
-  team_id: number;
+  race_points: number;
 }

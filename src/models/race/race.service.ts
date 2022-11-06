@@ -1,4 +1,139 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { RaceByDto } from './dtos/race-by.dto';
+import { Race } from './race.entity';
 
 @Injectable()
-export class RaceService {}
+export class RaceService {
+  constructor(@InjectRepository(Race) private repo: Repository<Race>) {}
+
+  async getAll(): Promise<Array<Race>> {
+    const racesData: Array<Race> = await this.repo.find();
+    if (!racesData) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (racesData.length < 1) {
+      throw new NotFoundException('Driver data not found.');
+    }
+    return racesData;
+  }
+
+  async getAllRacesByDriver(id: number): Promise<Array<RaceByDto>> {
+    const racesData: Array<RaceByDto> = await this.repo
+      .createQueryBuilder('race')
+      .innerJoin('race.grand_prix', 'gp')
+      .innerJoin('gp.driver', 'driver')
+      .innerJoin('gp.circuit', 'circuit')
+      .innerJoin('gp.team', 'team')
+      .where('driver.id = :id', { id })
+      .select([
+        'race.grand_prix',
+        'race.position',
+        'race.laps_disputed',
+        'race.average_speed',
+        'race.num_pit_stops',
+        'race.total_time',
+        'race.retired',
+        'race.race_points',
+        'driver.name',
+        'driver.id',
+        'circuit.circuit_name',
+        'circuit.id',
+        'team.name',
+        'team.id',
+      ])
+      .orderBy({
+        'circuit.id': 'ASC',
+      })
+      .getRawMany();
+
+    if (!racesData) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (racesData.length < 1) {
+      throw new NotFoundException('Driver data not found.');
+    }
+    return racesData;
+  }
+
+  async getAllRacesByCircuit(id: number): Promise<Array<RaceByDto>> {
+    const racesData: Array<RaceByDto> = await this.repo
+      .createQueryBuilder('race')
+      .innerJoin('race.grand_prix', 'gp')
+      .innerJoin('gp.driver', 'driver')
+      .innerJoin('gp.circuit', 'circuit')
+      .innerJoin('gp.team', 'team')
+      .where('circuit.id = :id', { id })
+      .select([
+        'race.grand_prix',
+        'race.position',
+        'race.laps_disputed',
+        'race.average_speed',
+        'race.num_pit_stops',
+        'race.total_time',
+        'race.retired',
+        'race.race_points',
+        'driver.name',
+        'driver.id',
+        'circuit.circuit_name',
+        'circuit.id',
+        'team.name',
+        'team.id',
+      ])
+      .orderBy({
+        'race.position': 'ASC',
+      })
+      .getRawMany();
+
+    if (!racesData) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (racesData.length < 1) {
+      throw new NotFoundException('Driver data not found.');
+    }
+    return racesData;
+  }
+
+  async getAllRacesByTeam(id: number): Promise<Array<RaceByDto>> {
+    const racesData: Array<RaceByDto> = await this.repo
+      .createQueryBuilder('race')
+      .innerJoin('race.grand_prix', 'gp')
+      .innerJoin('gp.driver', 'driver')
+      .innerJoin('gp.circuit', 'circuit')
+      .innerJoin('gp.team', 'team')
+      .where('team.id = :id', { id })
+      .select([
+        'race.grand_prix',
+        'race.position',
+        'race.laps_disputed',
+        'race.average_speed',
+        'race.num_pit_stops',
+        'race.total_time',
+        'race.retired',
+        'race.race_points',
+        'driver.name',
+        'driver.id',
+        'circuit.circuit_name',
+        'circuit.id',
+        'team.name',
+        'team.id',
+      ])
+      .orderBy({
+        'circuit.id': 'ASC',
+      })
+      .getRawMany();
+
+    if (!racesData) {
+      throw new BadRequestException('Something went wrong.');
+    }
+    if (racesData.length < 1) {
+      throw new NotFoundException('Driver data not found.');
+    }
+    return racesData;
+  }
+}

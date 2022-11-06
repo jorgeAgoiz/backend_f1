@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Transform } from 'class-transformer';
 import { IsNumber } from 'class-validator';
-import { fastLapStringToMiliseconds } from 'src/common/helpers/dates.helpers';
+import { timeStringToMiliseconds } from 'src/common/helpers/dates.helpers';
 
 export class QualifyingDto {
   @Expose()
@@ -28,7 +28,7 @@ export class QualifyingDto {
   @ApiProperty()
   @Transform((data) => {
     if (data.value !== 'no register') {
-      return fastLapStringToMiliseconds(data.value);
+      return timeStringToMiliseconds({ value: data.value, type: 'lap' });
     }
     return data.value;
   })
