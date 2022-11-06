@@ -1,9 +1,11 @@
 import { Controller, Get, Param } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Serialize } from 'src/common/interceptors/basic.interceptor';
 import { RaceByDto } from './dtos/race-by.dto';
 import { RaceDto } from './dtos/race.dto';
 import { RaceService } from './race.service';
 
+@ApiTags('Race Session')
 @Controller('race')
 export class RaceController {
   constructor(private raceService: RaceService) {}

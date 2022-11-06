@@ -1,0 +1,15 @@
+### SPRINTS
+
+GET http://localhost:3000/sprint HTTP/1.1
+
+###
+
+GET http://localhost:3000/sprint/driver/6 HTTP/1.1
+
+###
+
+GET http://localhost:3000/sprint/circuit/4 HTTP/1.1
+
+###
+
+GET http://localhost:3000/sprint/team/6 HTTP/1.1
