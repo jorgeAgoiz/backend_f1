@@ -9,11 +9,11 @@ export class FastLap {
   grand_prix: GrandPrix;
 
   @PrimaryColumn({ type: 'varchar', length: 8 })
-  fl_session: number;
+  fl_session: string;
 
   @Column({ type: 'varchar', length: 15 })
   time: string;
 
   @Column()
-  lap: string;
+  lap: number;
 }

@@ -1,0 +1,15 @@
+### FAST LAPS
+
+GET http://localhost:3000/fast-lap HTTP/1.1
+
+###
+
+GET http://localhost:3000/fast-lap/driver/12 HTTP/1.1
+
+###
+
+GET http://localhost:3000/fast-lap/circuit/4 HTTP/1.1
+
+###
+
+GET http://localhost:3000/fast-lap/team/4 HTTP/1.1
