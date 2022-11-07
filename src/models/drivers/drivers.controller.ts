@@ -7,12 +7,15 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger/dist';
+import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
 import { DriversService } from './drivers.service';
 import { CreateDriverDto } from './dtos/create-driver.dto';
 import { UpdateDriverDto } from './dtos/update-driver.dto';
 @ApiTags('Drivers of formula one')
+@UseGuards(ApiKeyAuthGuard)
 @Controller('drivers')
 export class DriversController {
   constructor(private driversService: DriversService) {}

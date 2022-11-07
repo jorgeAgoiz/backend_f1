@@ -1,9 +1,13 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
 import { Serialize } from 'src/common/interceptors/basic.interceptor';
 import { FLByDto } from './dtos/fl-by.dto';
 import { FastLapDto } from './dtos/fl.dto';
 import { FastLapService } from './fast-lap.service';
 
+@ApiTags('Fast Laps')
+@UseGuards(ApiKeyAuthGuard)
 @Controller('fast-lap')
 export class FastLapController {
   constructor(private fastLapService: FastLapService) {}

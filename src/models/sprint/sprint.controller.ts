@@ -1,11 +1,13 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
 import { Serialize } from 'src/common/interceptors/basic.interceptor';
 import { SprintByDto } from './dtos/sprint-by.dto';
 import { SprintDto } from './dtos/sprint.dto';
 import { SprintService } from './sprint.service';
 
 @ApiTags('Sprint Session')
+@UseGuards(ApiKeyAuthGuard)
 @Controller('sprint')
 export class SprintController {
   constructor(private sprintService: SprintService) {}

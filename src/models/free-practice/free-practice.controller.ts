@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { FPAvgSpeedDto } from './dtos/fp-avg-speed.dto';
 import { FreePracticeDto } from './dtos/fp.dto';
@@ -6,8 +6,10 @@ import { FreePracticeService } from './free-practice.service';
 import { Serialize } from '../../common/interceptors/basic.interceptor';
 import { FPBy } from './dtos/fp-by.dto';
 import { FPLapTimesDto } from './dtos/fp-laps.dto';
+import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
 
 @ApiTags('Free Practice Session')
+@UseGuards(ApiKeyAuthGuard)
 @Controller('free-practice')
 export class FreePracticeController {
   constructor(private freePracticeService: FreePracticeService) {}

@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
 import { Serialize } from 'src/common/interceptors/basic.interceptor';
 import { QFAvgSpeedDto } from './dtos/qf-avg-speed.dto';
 import { QFByDto } from './dtos/qf-by.dto';
@@ -8,6 +9,7 @@ import { QualifyingDto } from './dtos/qualifying.dto';
 import { QualifyingService } from './qualifying.service';
 
 @ApiTags('Qualifiying Session')
+@UseGuards(ApiKeyAuthGuard)
 @Controller('qualifying')
 export class QualifyingController {
   constructor(private qualifyingService: QualifyingService) {}

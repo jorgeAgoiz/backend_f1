@@ -1,11 +1,13 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
 import { Serialize } from 'src/common/interceptors/basic.interceptor';
 import { RaceByDto } from './dtos/race-by.dto';
 import { RaceDto } from './dtos/race.dto';
 import { RaceService } from './race.service';
 
 @ApiTags('Race Session')
+@UseGuards(ApiKeyAuthGuard)
 @Controller('race')
 export class RaceController {
   constructor(private raceService: RaceService) {}

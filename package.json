@@ -24,6 +24,7 @@
     "@nestjs/common": "9.0.0",
     "@nestjs/config": "2.2.0",
     "@nestjs/core": "9.0.0",
+    "@nestjs/passport": "9.0.0",
     "@nestjs/platform-express": "9.0.0",
     "@nestjs/swagger": "6.1.2",
     "@nestjs/typeorm": "9.0.1",
@@ -34,12 +35,14 @@
     "cross-env": "7.0.3",
     "mysql2": "2.3.3",
     "nestjs-pino": "3.1.1",
+    "passport": "0.6.0",
+    "passport-headerapikey": "1.2.2",
     "pino-http": "8.2.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "7.2.0",
     "typeorm": "0.3.10",
-    "uuid": "^9.0.0"
+    "uuid": "9.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "9.0.0",

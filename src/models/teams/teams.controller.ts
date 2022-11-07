@@ -7,13 +7,16 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { TeamsService } from './teams.service';
 import { ApiTags } from '@nestjs/swagger/dist';
 import { CreateTeamDto } from './dtos/create-team.dto';
 import { UpdateTeamDto } from './dtos/update-team.dto';
+import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
 
 @ApiTags('Teams of formula one')
+@UseGuards(ApiKeyAuthGuard)
 @Controller('teams')
 export class TeamsController {
   constructor(private teamsService: TeamsService) {}

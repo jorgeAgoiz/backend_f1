@@ -1,8 +1,10 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { GridService } from './grid.service';
 import { ApiTags } from '@nestjs/swagger';
+import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
 
 @ApiTags('Grids')
+@UseGuards(ApiKeyAuthGuard)
 @Controller('grid')
 export class GridController {
   constructor(private gridService: GridService) {}

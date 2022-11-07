@@ -20,6 +20,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { CorrelationIdMiddleware } from './common/middlewares/correlation-id.middleware';
 import { Request } from 'express';
 import { CORRELATION_ID } from './common/constants/logger';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -67,6 +68,7 @@ import { CORRELATION_ID } from './common/constants/logger';
     SprintModule,
     RaceModule,
     FastLapModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [
