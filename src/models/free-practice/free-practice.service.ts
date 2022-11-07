@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -13,11 +14,13 @@ import { FPPositionsDto } from './dtos/fp-positions-by.dto';
 
 @Injectable()
 export class FreePracticeService {
+  private readonly logger = new Logger();
   constructor(
     @InjectRepository(FreePractice) private repo: Repository<FreePractice>,
   ) {}
 
   async getAll(): Promise<Array<FreePractice>> {
+    this.logger.log('Get All Free Practices');
     const fpsData: Array<FreePractice> = await this.repo.find();
 
     if (!fpsData) {
@@ -30,6 +33,7 @@ export class FreePracticeService {
   }
 
   async getAllFpsByDriver(id: number): Promise<Array<FPBy>> {
+    this.logger.log('Get All Free Practices By Driver');
     const driverFpsData: Array<FPBy> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
@@ -68,6 +72,7 @@ export class FreePracticeService {
   }
 
   async getAllFpsByCircuit(id: number): Promise<Array<FPBy>> {
+    this.logger.log('Get All Free Practices By Circuit');
     const circuitFpsData: Array<FPBy> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
@@ -106,6 +111,7 @@ export class FreePracticeService {
   }
 
   async getAllFpsByTeam(id: number): Promise<Array<FPBy>> {
+    this.logger.log('Get All Free Practices By Team');
     const teamFpsData: Array<FPBy> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
@@ -144,6 +150,7 @@ export class FreePracticeService {
   }
 
   async getAvgSpeedByDriver(id: number): Promise<Array<FPAvgSpeedDto>> {
+    this.logger.log('Get All Average Speeds In Free Practices By Driver');
     const averageSpeeds: Array<FPAvgSpeedDto> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
@@ -163,6 +170,7 @@ export class FreePracticeService {
   }
 
   async getLapsTimeByDriver(id: number): Promise<Array<FPLapTimesDto>> {
+    this.logger.log('Get All Lap Times In Free Practices By Driver');
     const lapsTimes: Array<FPLapTimesDto> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
@@ -183,6 +191,7 @@ export class FreePracticeService {
   }
 
   async getPositionsByDriver(id: number): Promise<Array<FPPositionsDto>> {
+    this.logger.log('Get All Positions In Free Practices By Driver');
     const positions: Array<FPPositionsDto> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')

@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,9 +11,11 @@ import { Race } from './race.entity';
 
 @Injectable()
 export class RaceService {
+  private readonly logger = new Logger();
   constructor(@InjectRepository(Race) private repo: Repository<Race>) {}
 
   async getAll(): Promise<Array<Race>> {
+    this.logger.log('Get All Races');
     const racesData: Array<Race> = await this.repo.find();
     if (!racesData) {
       throw new BadRequestException('Something went wrong.');
@@ -24,6 +27,7 @@ export class RaceService {
   }
 
   async getAllRacesByDriver(id: number): Promise<Array<RaceByDto>> {
+    this.logger.log('Get All Races By Driver');
     const racesData: Array<RaceByDto> = await this.repo
       .createQueryBuilder('race')
       .innerJoin('race.grand_prix', 'gp')
@@ -62,6 +66,7 @@ export class RaceService {
   }
 
   async getAllRacesByCircuit(id: number): Promise<Array<RaceByDto>> {
+    this.logger.log('Get All Races By Circuit');
     const racesData: Array<RaceByDto> = await this.repo
       .createQueryBuilder('race')
       .innerJoin('race.grand_prix', 'gp')
@@ -100,6 +105,7 @@ export class RaceService {
   }
 
   async getAllRacesByTeam(id: number): Promise<Array<RaceByDto>> {
+    this.logger.log('Get All Races By Team');
     const racesData: Array<RaceByDto> = await this.repo
       .createQueryBuilder('race')
       .innerJoin('race.grand_prix', 'gp')

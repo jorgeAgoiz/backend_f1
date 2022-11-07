@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,9 +11,11 @@ import { Grid } from './grid.entity';
 
 @Injectable()
 export class GridService {
+  private readonly logger = new Logger();
   constructor(@InjectRepository(Grid) private repo: Repository<Grid>) {}
 
   async getAll(): Promise<Array<Grid>> {
+    this.logger.log('Get All Grids');
     const grids: Array<Grid> = await this.repo.find();
     if (!grids) {
       throw new BadRequestException('Something went wrong.');
@@ -21,6 +24,7 @@ export class GridService {
   }
 
   async getAllGridsByType(type: string): Promise<Array<Grid>> {
+    this.logger.log('Get All Grids By Type');
     const grids: Array<Grid> = await this.repo.findBy({ type_grid: type });
     if (!grids) {
       throw new BadRequestException('Something went wrong.');
@@ -29,6 +33,7 @@ export class GridService {
   }
 
   async getAllGridsByDriver(id: number): Promise<Array<GridByDto>> {
+    this.logger.log('Get All Grids By Driver');
     const grids: Array<GridByDto> = await this.repo
       .createQueryBuilder('grid')
       .innerJoin('grid.grand_prix', 'gp')
@@ -63,6 +68,7 @@ export class GridService {
   }
 
   async getAllGridsByCircuit(id: number) {
+    this.logger.log('Get All Grids By Circuit');
     const grids: Array<GridByDto> = await this.repo
       .createQueryBuilder('grid')
       .innerJoin('grid.grand_prix', 'gp')
@@ -97,6 +103,7 @@ export class GridService {
   }
 
   async getAllGridsByTeam(id: number) {
+    this.logger.log('Get All Grids By Team');
     const grids: Array<GridByDto> = await this.repo
       .createQueryBuilder('grid')
       .innerJoin('grid.grand_prix', 'gp')

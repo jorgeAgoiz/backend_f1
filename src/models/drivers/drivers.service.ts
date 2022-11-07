@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
@@ -12,9 +13,11 @@ import { UpdateDriverDto } from './dtos/update-driver.dto';
 
 @Injectable()
 export class DriversService {
+  private readonly logger = new Logger();
   constructor(@InjectRepository(Driver) private repo: Repository<Driver>) {}
 
   async getAll(country: string): Promise<Array<DriverDto>> {
+    this.logger.log('Get All Drivers');
     const drivers: Array<DriverDto> = await this.repo.find({
       where: { country },
     });
@@ -25,6 +28,7 @@ export class DriversService {
   }
 
   async getOneBy(id: number): Promise<DriverDto> {
+    this.logger.log('Get A Driver By ID');
     const driver: DriverDto = await this.repo.findOneBy({ id });
     if (!driver) {
       throw new NotFoundException('Driver not found');
@@ -39,6 +43,7 @@ export class DriversService {
     country,
     picture,
   }: CreateDriverDto): Promise<DriverDto> {
+    this.logger.log('Insert A Driver');
     const newDriver: Driver = await this.repo.create({
       name,
       dorsal_number,
@@ -53,6 +58,7 @@ export class DriversService {
   }
 
   async update(id: number, attrs: UpdateDriverDto): Promise<DriverDto> {
+    this.logger.log('Update A Driver');
     const driver: DriverDto = await this.repo.findOneBy({ id });
     if (!driver) {
       throw new NotFoundException('Driver not found');
@@ -61,6 +67,7 @@ export class DriversService {
   }
 
   async remove(id: number): Promise<DriverDto> {
+    this.logger.log('Delete A Driver');
     const driver: DriverDto = await this.repo.findOneBy({ id });
     if (!driver) {
       throw new NotFoundException('Driver not found');

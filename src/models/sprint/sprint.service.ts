@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -10,9 +11,11 @@ import { Sprint } from './sprint.entity';
 
 @Injectable()
 export class SprintService {
+  private readonly logger = new Logger();
   constructor(@InjectRepository(Sprint) private repo: Repository<Sprint>) {}
 
   async getAll(): Promise<Array<Sprint>> {
+    this.logger.log('Get All Sprints');
     const sprintsData: Array<Sprint> = await this.repo.find();
 
     if (!sprintsData) {
@@ -25,6 +28,7 @@ export class SprintService {
   }
 
   async getAllSprintsByDriver(id: number): Promise<Array<SprintDto>> {
+    this.logger.log('Get All Sprints By Driver');
     const sprintsData: Array<SprintDto> = await this.repo
       .createQueryBuilder('sprint')
       .innerJoin('sprint.grand_prix', 'gp')
@@ -61,6 +65,7 @@ export class SprintService {
   }
 
   async getAllSprintsByCircuit(id: number): Promise<Array<SprintDto>> {
+    this.logger.log('Get All Sprints By Circuit');
     const sprintsData: Array<SprintDto> = await this.repo
       .createQueryBuilder('sprint')
       .innerJoin('sprint.grand_prix', 'gp')
@@ -97,6 +102,7 @@ export class SprintService {
   }
 
   async getAllSprintsByTeam(id: number): Promise<Array<SprintDto>> {
+    this.logger.log('Get All Sprints By Team');
     const sprintsData: Array<SprintDto> = await this.repo
       .createQueryBuilder('sprint')
       .innerJoin('sprint.grand_prix', 'gp')

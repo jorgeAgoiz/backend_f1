@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,9 +11,11 @@ import { FastLap } from './fast-lap.entity';
 
 @Injectable()
 export class FastLapService {
+  private readonly logger = new Logger();
   constructor(@InjectRepository(FastLap) private repo: Repository<FastLap>) {}
 
   async getAll(type?: string): Promise<Array<FastLap>> {
+    this.logger.log('Get All Fast Laps');
     const lapsData: Array<FastLap> = await this.repo.find({
       where: {
         fl_session: type,
@@ -28,6 +31,7 @@ export class FastLapService {
   }
 
   async getAllFastLapsByDriver(id: number): Promise<Array<FLByDto>> {
+    this.logger.log('Get All Fast Laps By Driver');
     const lapsData: Array<FLByDto> = await this.repo
       .createQueryBuilder('fl')
       .innerJoin('fl.grand_prix', 'gp')
@@ -63,6 +67,7 @@ export class FastLapService {
   }
 
   async getAllFastLapsByCircuit(id: number): Promise<Array<FLByDto>> {
+    this.logger.log('Get All Fast Laps By Circuit');
     const lapsData: Array<FLByDto> = await this.repo
       .createQueryBuilder('fl')
       .innerJoin('fl.grand_prix', 'gp')
@@ -98,6 +103,7 @@ export class FastLapService {
   }
 
   async getAllFastLapsByTeam(id: number): Promise<Array<FLByDto>> {
+    this.logger.log('Get All Fast Laps By Team');
     const lapsData: Array<FLByDto> = await this.repo
       .createQueryBuilder('fl')
       .innerJoin('fl.grand_prix', 'gp')

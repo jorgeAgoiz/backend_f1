@@ -50,6 +50,11 @@ import { CORRELATION_ID } from './common/constants/logger';
           },
         },
         messageKey: 'message',
+        customProps: (req: Request) => {
+          return {
+            correlationId: req[CORRELATION_ID],
+          };
+        },
       },
     }),
     DriversModule,

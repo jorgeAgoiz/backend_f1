@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,11 +14,13 @@ import { Qualifying } from './qualifying.entity';
 
 @Injectable()
 export class QualifyingService {
+  private readonly logger = new Logger();
   constructor(
     @InjectRepository(Qualifying) private repo: Repository<Qualifying>,
   ) {}
 
   async getAll(): Promise<Array<Qualifying>> {
+    this.logger.log('Get All Qualifyings');
     const qfsData: Array<Qualifying> = await this.repo.find();
     if (!qfsData) {
       throw new BadRequestException('Something went wrong.');
@@ -29,6 +32,7 @@ export class QualifyingService {
   }
 
   async getAllQfByDriver(id: number): Promise<Array<QFByDto>> {
+    this.logger.log('Get All Qualifyings By Driver');
     const driverQfData: Array<QFByDto> = await this.repo
       .createQueryBuilder('qf')
       .innerJoin('qf.grand_prix', 'gp')
@@ -66,6 +70,7 @@ export class QualifyingService {
   }
 
   async getAllQfByCircuit(id: number): Promise<Array<QFByDto>> {
+    this.logger.log('Get All Qualifyings By Circuit');
     const circuitQfData: Array<QFByDto> = await this.repo
       .createQueryBuilder('qf')
       .innerJoin('qf.grand_prix', 'gp')
@@ -103,6 +108,7 @@ export class QualifyingService {
   }
 
   async getAllQfByTeam(id: number): Promise<Array<QFByDto>> {
+    this.logger.log('Get All Qualifyings By Team');
     const teamQfData: Array<QFByDto> = await this.repo
       .createQueryBuilder('qf')
       .innerJoin('qf.grand_prix', 'gp')
@@ -140,6 +146,7 @@ export class QualifyingService {
   }
 
   async getAvgSpeedByDriver(id: number): Promise<Array<QFAvgSpeedDto>> {
+    this.logger.log('Get All Average Speeds In Qualifyings By Driver');
     const averageSpeeds: Array<QFAvgSpeedDto> = await this.repo
       .createQueryBuilder('qf')
       .innerJoin('qf.grand_prix', 'gp')
@@ -163,6 +170,7 @@ export class QualifyingService {
   }
 
   async getLapsTimeByDriver(id: number): Promise<Array<QFLapsDto>> {
+    this.logger.log('Get All Lap Times In Qualifyings By Driver');
     const lapsTimes: Array<QFLapsDto> = await this.repo
       .createQueryBuilder('qf')
       .innerJoin('qf.grand_prix', 'gp')
@@ -186,6 +194,7 @@ export class QualifyingService {
   }
 
   async getPositionsByDriver(id: number): Promise<Array<QFPositionsDto>> {
+    this.logger.log('Get All Positions In Qualifyings By Driver');
     const positions: Array<QFPositionsDto> = await this.repo
       .createQueryBuilder('qf')
       .innerJoin('qf.grand_prix', 'gp')

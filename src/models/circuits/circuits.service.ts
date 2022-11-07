@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { Between, Repository } from 'typeorm';
@@ -13,6 +14,7 @@ import { CircuitGetQueries } from './interfaces/circuit.types';
 
 @Injectable()
 export class CircuitsService {
+  private readonly logger = new Logger();
   constructor(@InjectRepository(Circuit) private repo: Repository<Circuit>) {}
 
   async getAll({
@@ -20,6 +22,7 @@ export class CircuitsService {
     mindistance,
     maxdistance,
   }: CircuitGetQueries): Promise<Array<CircuitDto>> {
+    this.logger.log('Get All Circuits');
     let minDistanceParsed = 0;
     if (mindistance) {
       minDistanceParsed = parseFloat(mindistance);
@@ -43,6 +46,7 @@ export class CircuitsService {
   }
 
   async getOneBy(id: number): Promise<CircuitDto> {
+    this.logger.log('Get A Circuit By ID');
     const circuit: CircuitDto = await this.repo.findOneBy({ id });
     if (!circuit) {
       throw new NotFoundException('Circuit not found');
@@ -57,6 +61,7 @@ export class CircuitsService {
     country,
     distance,
   }: CreateCircuitDto): Promise<CircuitDto> {
+    this.logger.log('Insert A Circuit');
     const newCircuit: Circuit = await this.repo.create({
       gp_name,
       circuit_name,
@@ -72,6 +77,7 @@ export class CircuitsService {
   }
 
   async update(id: number, attrs: UpdateCircuitDto): Promise<CircuitDto> {
+    this.logger.log('Update A Circuit');
     const circuit: CircuitDto = await this.repo.findOneBy({ id });
     if (!circuit) {
       throw new NotFoundException('Driver not found');
@@ -80,6 +86,7 @@ export class CircuitsService {
   }
 
   async delete(id: number): Promise<CircuitDto> {
+    this.logger.log('Delete A Circuit');
     const circuit: CircuitDto = await this.repo.findOneBy({ id });
     if (!circuit) {
       throw new NotFoundException('Driver not found');
