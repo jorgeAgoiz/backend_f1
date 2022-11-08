@@ -14,6 +14,7 @@ async function bootstrap() {
     .setDescription('REST API about formula one data and statistics')
     .setVersion('1.0')
     .addTag('f1')
+    .addApiKey()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

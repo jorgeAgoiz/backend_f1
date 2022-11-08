@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FreePractice } from './free-practice.entity';
-import { FPBy } from './dtos/fp-by.dto';
+import { FPByDto } from './dtos/fp-by.dto';
 import { FPAvgSpeedDto } from './dtos/fp-avg-speed.dto';
 import { FPLapTimesDto } from './dtos/fp-laps.dto';
 import { FPPositionsDto } from './dtos/fp-positions-by.dto';
@@ -32,9 +32,9 @@ export class FreePracticeService {
     return fpsData;
   }
 
-  async getAllFpsByDriver(id: number): Promise<Array<FPBy>> {
+  async getAllFpsByDriver(id: number): Promise<Array<FPByDto>> {
     this.logger.log('Get All Free Practices By Driver');
-    const driverFpsData: Array<FPBy> = await this.repo
+    const driverFpsData: Array<FPByDto> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -71,9 +71,9 @@ export class FreePracticeService {
     return driverFpsData;
   }
 
-  async getAllFpsByCircuit(id: number): Promise<Array<FPBy>> {
+  async getAllFpsByCircuit(id: number): Promise<Array<FPByDto>> {
     this.logger.log('Get All Free Practices By Circuit');
-    const circuitFpsData: Array<FPBy> = await this.repo
+    const circuitFpsData: Array<FPByDto> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')
@@ -110,9 +110,9 @@ export class FreePracticeService {
     return circuitFpsData;
   }
 
-  async getAllFpsByTeam(id: number): Promise<Array<FPBy>> {
+  async getAllFpsByTeam(id: number): Promise<Array<FPByDto>> {
     this.logger.log('Get All Free Practices By Team');
-    const teamFpsData: Array<FPBy> = await this.repo
+    const teamFpsData: Array<FPByDto> = await this.repo
       .createQueryBuilder('fp')
       .innerJoin('fp.grand_prix', 'gp')
       .innerJoin('gp.driver', 'driver')

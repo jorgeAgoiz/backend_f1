@@ -9,9 +9,10 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger/dist';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger/dist';
 import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
 import { CircuitsService } from './circuits.service';
+import { CircuitDto } from './dtos/circuit.dto';
 import { CreateCircuitDto } from './dtos/create-circuit.dto';
 import { UpdateCircuitDto } from './dtos/update-circuit.dto';
 
@@ -21,6 +22,8 @@ import { UpdateCircuitDto } from './dtos/update-circuit.dto';
 export class CircuitsController {
   constructor(private circuitsService: CircuitsService) {}
 
+  @ApiOperation({ summary: 'Get all circuits' })
+  @ApiOkResponse({ isArray: true, type: CircuitDto })
   @Get()
   getCircuits(
     @Query('country') country: string,
@@ -30,11 +33,14 @@ export class CircuitsController {
     return this.circuitsService.getAll({ country, mindistance, maxdistance });
   }
 
+  @ApiOperation({ summary: 'Get a circuit by ID' })
+  @ApiOkResponse({ type: CircuitDto })
   @Get('/:id')
   getOneCircuitBy(@Param('id') id: string) {
     return this.circuitsService.getOneBy(parseInt(id));
   }
 
+  @ApiOperation({ summary: 'Insert a circuit' })
   @Post()
   insertCircuit(@Body() body: CreateCircuitDto) {
     const { gp_name, circuit_name, location, country, distance } = body;
@@ -47,11 +53,13 @@ export class CircuitsController {
     });
   }
 
+  @ApiOperation({ summary: 'Update a circuit by ID' })
   @Patch('/:id')
   updateCircuit(@Param('id') id: string, @Body() body: UpdateCircuitDto) {
     return this.circuitsService.update(parseInt(id), body);
   }
 
+  @ApiOperation({ summary: 'Delete a circuit by ID' })
   @Delete('/:id')
   deleteCircuit(@Param('id') id: string) {
     return this.circuitsService.delete(parseInt(id));

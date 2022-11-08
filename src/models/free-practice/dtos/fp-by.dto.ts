@@ -3,7 +3,7 @@ import { Expose, Transform } from 'class-transformer';
 import { IsNumber, IsString } from 'class-validator';
 import { timeStringToMiliseconds } from 'src/common/helpers/dates.helpers';
 
-export class FPBy {
+export class FPByDto {
   @Expose()
   @ApiProperty()
   @IsNumber()
