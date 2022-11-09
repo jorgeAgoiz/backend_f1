@@ -36,7 +36,7 @@ import { AuthModule } from './auth/auth.module';
       useFactory: async (cfg: ConfigService) => ({
         dsn: process.env.DSN_SENTRY,
         debug: true,
-        environment: environmentTypes.development,
+        environment: process.env.SENTRY_ENV,
         release: null,
         logLevels: [logLevels.debug],
       }),
