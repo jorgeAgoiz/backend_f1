@@ -18,8 +18,12 @@ describe('CircuitsController', (): void => {
     getAll: jest.fn(() => {
       return [dto, dto, dto];
     }),
-    getOneBy: jest.fn(() => {
-      return dto;
+    getOneBy: jest.fn((id) => {
+      if (dto.id === parseInt(id)) {
+        return dto;
+      } else {
+        return null;
+      }
     }),
   };
 
