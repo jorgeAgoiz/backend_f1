@@ -42,7 +42,7 @@ describe('FastLapService', (): void => {
     })),
   };
 
-  beforeEach(async () => {
+  beforeEach(async (): Promise<void> => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         FastLapService,

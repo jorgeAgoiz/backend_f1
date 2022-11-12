@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { FastLapDto } from '../fast-lap/dtos/fl.dto';
 import { GrandPrixDto } from '../grand-prix/dtos/grand-prix.dto';
 import { FreePracticeDto } from './dtos/fp.dto';
 import { FreePracticeController } from './free-practice.controller';
