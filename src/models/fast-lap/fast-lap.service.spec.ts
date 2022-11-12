@@ -5,7 +5,7 @@ import { FastLapDto } from './dtos/fl.dto';
 import { FastLap } from './fast-lap.entity';
 import { FastLapService } from './fast-lap.service';
 
-describe('FastLapService', () => {
+describe('FastLapService', (): void => {
   let service: FastLapService;
   const gpDto: GrandPrixDto = {
     id: 23,
@@ -21,7 +21,7 @@ describe('FastLapService', () => {
     time: 97261,
     lap: 48,
   };
-  const idValues = [12, 6, 4];
+  const idValues: Array<number> = [12, 6, 4];
 
   const mockFastLapsRepository = {
     find: jest

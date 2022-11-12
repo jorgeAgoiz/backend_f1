@@ -23,24 +23,24 @@ describe('FastLapController', (): void => {
   };
 
   const mockFastLapService = {
-    getAll: jest.fn(() => {
+    getAll: jest.fn((): Array<FastLapDto> => {
       return [flDto, flDto, flDto];
     }),
-    getAllFastLapsByDriver: jest.fn((id) => {
+    getAllFastLapsByDriver: jest.fn((id): Array<FastLapDto> => {
       if (gpDto.driver === parseInt(id)) {
         return [flDto, flDto, flDto, flDto, flDto];
       } else {
         return null;
       }
     }),
-    getAllFastLapsByCircuit: jest.fn((id) => {
+    getAllFastLapsByCircuit: jest.fn((id): Array<FastLapDto> => {
       if (gpDto.circuit === parseInt(id)) {
         return [flDto, flDto, flDto, flDto, flDto];
       } else {
         return null;
       }
     }),
-    getAllFastLapsByTeam: jest.fn((id) => {
+    getAllFastLapsByTeam: jest.fn((id): Array<FastLapDto> => {
       if (gpDto.team === parseInt(id)) {
         return [flDto, flDto, flDto, flDto, flDto];
       } else {
