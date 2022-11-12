@@ -4,7 +4,7 @@ import { Circuit } from './circuit.entity';
 import { CircuitsService } from './circuits.service';
 import { CircuitDto } from './dtos/circuit.dto';
 
-describe('CircuitsService', () => {
+describe('CircuitsService', (): void => {
   let service: CircuitsService;
   const dto: CircuitDto = {
     id: 12,
