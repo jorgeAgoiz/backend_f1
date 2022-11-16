@@ -5,7 +5,7 @@ import { RaceDto } from './dtos/race.dto';
 import { Race } from './race.entity';
 import { RaceService } from './race.service';
 
-describe('RaceService', () => {
+describe('RaceService', (): void => {
   let service: RaceService;
   const gpDto: GrandPrixDto = {
     id: 1,
@@ -25,14 +25,28 @@ describe('RaceService', () => {
     retired: 'Unidad de Potencia',
     race_points: 0,
   };
+  const idValues: Array<number> = [12, 6, 4];
 
   const mockRacesRepository = {
     find: jest
       .fn()
       .mockImplementation(() => Promise.resolve([raceDto, raceDto])),
+    createQueryBuilder: jest.fn(() => ({
+      innerJoin: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      select: jest.fn().mockReturnThis(),
+      orderBy: jest.fn().mockReturnThis(),
+      getRawMany: jest.fn().mockImplementation(() => {
+        if (idValues.includes(gpDto.driver)) {
+          return Promise.resolve([raceDto, raceDto]);
+        } else {
+          return Promise.reject();
+        }
+      }),
+    })),
   };
 
-  beforeEach(async () => {
+  beforeEach(async (): Promise<void> => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         RaceService,
@@ -46,13 +60,32 @@ describe('RaceService', () => {
     service = module.get<RaceService>(RaceService);
   });
 
-  it('should be defined', () => {
+  it('should be defined', (): void => {
     expect(service).toBeDefined();
   });
 
-  it('get all races', async () => {
+  it('get all races', async (): Promise<void> => {
     expect(await service.getAll()).toHaveLength(2);
   });
 
-  // SIGO AQUI IMPLEMENTANDO
+  it('get all races by driver ID', async (): Promise<void> => {
+    expect(await service.getAllRacesByDriver(gpDto.driver)).toEqual([
+      raceDto,
+      raceDto,
+    ]);
+  });
+
+  it('get all races by circuit ID', async (): Promise<void> => {
+    expect(await service.getAllRacesByCircuit(gpDto.circuit)).toEqual([
+      raceDto,
+      raceDto,
+    ]);
+  });
+
+  it('get all races by team ID', async (): Promise<void> => {
+    expect(await service.getAllRacesByTeam(gpDto.team)).toEqual([
+      raceDto,
+      raceDto,
+    ]);
+  });
 });

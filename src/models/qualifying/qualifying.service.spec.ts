@@ -5,7 +5,7 @@ import { QualifyingDto } from './dtos/qualifying.dto';
 import { Qualifying } from './qualifying.entity';
 import { QualifyingService } from './qualifying.service';
 
-describe('QualifyingService', () => {
+describe('QualifyingService', (): void => {
   let service: QualifyingService;
   const gpDto: GrandPrixDto = {
     id: 23,
