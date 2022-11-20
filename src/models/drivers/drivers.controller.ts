@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger/dist';
-import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
+import { ApiKeyAuthGuard } from '../../auth/guard/apikey-auth.guard';
 import { DriversService } from './drivers.service';
 import { CreateDriverDto } from './dtos/create-driver.dto';
 import { DriverDto } from './dtos/driver.dto';

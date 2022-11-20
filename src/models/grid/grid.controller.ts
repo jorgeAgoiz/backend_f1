@@ -1,7 +1,7 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { GridService } from './grid.service';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
+import { ApiKeyAuthGuard } from '../../auth/guard/apikey-auth.guard';
 import { GridDto } from './dtos/grid.dto';
 import { GridByDto } from './dtos/grid-by.dto';
 

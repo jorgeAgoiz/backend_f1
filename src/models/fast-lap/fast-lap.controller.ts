@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
-import { Serialize } from 'src/common/interceptors/basic.interceptor';
+import { ApiKeyAuthGuard } from '../../auth/guard/apikey-auth.guard';
+import { Serialize } from '../../common/interceptors/basic.interceptor';
 import { FLByDto } from './dtos/fl-by.dto';
 import { FastLapDto } from './dtos/fl.dto';
 import { FastLapService } from './fast-lap.service';

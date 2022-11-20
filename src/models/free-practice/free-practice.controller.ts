@@ -6,7 +6,7 @@ import { FreePracticeService } from './free-practice.service';
 import { Serialize } from '../../common/interceptors/basic.interceptor';
 import { FPByDto } from './dtos/fp-by.dto';
 import { FPLapTimesDto } from './dtos/fp-laps.dto';
-import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
+import { ApiKeyAuthGuard } from '../../auth/guard/apikey-auth.guard';
 
 @ApiTags('Free Practice Session')
 @UseGuards(ApiKeyAuthGuard)

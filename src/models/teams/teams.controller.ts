@@ -13,7 +13,7 @@ import { TeamsService } from './teams.service';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger/dist';
 import { CreateTeamDto } from './dtos/create-team.dto';
 import { UpdateTeamDto } from './dtos/update-team.dto';
-import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
+import { ApiKeyAuthGuard } from '../../auth/guard/apikey-auth.guard';
 import { TeamDto } from './dtos/team.dto';
 
 @ApiTags('Teams of formula one')

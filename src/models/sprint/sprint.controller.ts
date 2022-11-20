@@ -1,7 +1,7 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
-import { Serialize } from 'src/common/interceptors/basic.interceptor';
+import { ApiKeyAuthGuard } from '../../auth/guard/apikey-auth.guard';
+import { Serialize } from '../../common/interceptors/basic.interceptor';
 import { SprintByDto } from './dtos/sprint-by.dto';
 import { SprintDto } from './dtos/sprint.dto';
 import { SprintService } from './sprint.service';

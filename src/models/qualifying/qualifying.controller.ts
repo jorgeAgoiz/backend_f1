@@ -1,7 +1,7 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
-import { Serialize } from 'src/common/interceptors/basic.interceptor';
+import { ApiKeyAuthGuard } from '../../auth/guard/apikey-auth.guard';
+import { Serialize } from '../../common/interceptors/basic.interceptor';
 import { QFAvgSpeedDto } from './dtos/qf-avg-speed.dto';
 import { QFByDto } from './dtos/qf-by.dto';
 import { QFLapsDto } from './dtos/qf-laps.dto';

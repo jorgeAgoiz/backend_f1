@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger/dist';
-import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
+import { ApiKeyAuthGuard } from '../../auth/guard/apikey-auth.guard';
 import { CircuitsService } from './circuits.service';
 import { CircuitDto } from './dtos/circuit.dto';
 import { CreateCircuitDto } from './dtos/create-circuit.dto';
