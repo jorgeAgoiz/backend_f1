@@ -16,7 +16,7 @@ describe('Circuits (e2e)', (): void => {
     await app.init();
   });
 
-  it('/circuits (GET)', async (): Promise<void> => {
+  it('/circuits (GET) OK', async (): Promise<void> => {
     const response = await request(app.getHttpServer())
       .get('/circuits')
       .set('api-key', apiKey);
@@ -26,7 +26,7 @@ describe('Circuits (e2e)', (): void => {
     expect(response.body).toHaveLength(22);
   });
 
-  it('/circuits/:id (GET)', async (): Promise<void> => {
+  it('/circuits/:id (GET) OK', async (): Promise<void> => {
     const response = await request(app.getHttpServer())
       .get('/circuits/14')
       .set('api-key', apiKey);
@@ -34,5 +34,14 @@ describe('Circuits (e2e)', (): void => {
     expect(response.status).toEqual(200);
     expect(response.body.id).toEqual(14);
     expect(response.body.circuit_name).toMatch(/spa-francorchamps/i);
+  });
+
+  it('/circuits/:id (GET) NOT FOUND', async (): Promise<void> => {
+    const response = await request(app.getHttpServer())
+      .get('/circuits/999')
+      .set('api-key', apiKey);
+
+    expect(response.status).toEqual(404);
+    expect(response.body.error).toEqual('Not Found');
   });
 });

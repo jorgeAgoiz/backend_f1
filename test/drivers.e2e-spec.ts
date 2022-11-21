@@ -16,7 +16,7 @@ describe('Drivers (e2e)', (): void => {
     await app.init();
   });
 
-  it('/drivers (GET)', async (): Promise<void> => {
+  it('/drivers (GET) OK', async (): Promise<void> => {
     const response = await request(app.getHttpServer())
       .get('/drivers')
       .set('api-key', apiKey);
@@ -26,7 +26,7 @@ describe('Drivers (e2e)', (): void => {
     expect(response.body).toHaveLength(30);
   });
 
-  it('/drivers/:id (GET)', async (): Promise<void> => {
+  it('/drivers/:id (GET) OK', async (): Promise<void> => {
     const response = await request(app.getHttpServer())
       .get('/drivers/16')
       .set('api-key', apiKey);
@@ -34,5 +34,14 @@ describe('Drivers (e2e)', (): void => {
     expect(response.status).toEqual(200);
     expect(response.body.id).toEqual(16);
     expect(response.body.name).toMatch(/lewis hamilton/i);
+  });
+
+  it('/drivers/:id (GET) NOT FOUND', async (): Promise<void> => {
+    const response = await request(app.getHttpServer())
+      .get('/drivers/999')
+      .set('api-key', apiKey);
+
+    expect(response.status).toEqual(404);
+    expect(response.body.error).toEqual('Not Found');
   });
 });

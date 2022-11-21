@@ -16,7 +16,7 @@ describe('Teams (e2e)', (): void => {
     await app.init();
   });
 
-  it('/teams (GET)', async (): Promise<void> => {
+  it('/teams (GET) OK', async (): Promise<void> => {
     const response = await request(app.getHttpServer())
       .get('/teams')
       .set('api-key', apiKey);
@@ -26,7 +26,7 @@ describe('Teams (e2e)', (): void => {
     expect(response.body).toHaveLength(10);
   });
 
-  it('/teams/:id (GET)', async (): Promise<void> => {
+  it('/teams/:id (GET) OK', async (): Promise<void> => {
     const response = await request(app.getHttpServer())
       .get('/teams/7')
       .set('api-key', apiKey);
@@ -34,5 +34,14 @@ describe('Teams (e2e)', (): void => {
     expect(response.status).toEqual(200);
     expect(response.body.id).toEqual(7);
     expect(response.body.name).toMatch(/mclaren/i);
+  });
+
+  it('/teams/:id (GET) NOT FOUND', async (): Promise<void> => {
+    const response = await request(app.getHttpServer())
+      .get('/teams/999')
+      .set('api-key', apiKey);
+
+    expect(response.status).toEqual(404);
+    expect(response.body.error).toEqual('Not Found');
   });
 });
