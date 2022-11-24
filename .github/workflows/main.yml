@@ -1,0 +1,7 @@
+name: My first Github Action
+on: push
+jobs:
+  say_hello:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello World!!"
