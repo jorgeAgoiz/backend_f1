@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
+import { doesNotMatch } from 'assert';
 
 describe('Circuits (e2e)', (): void => {
   let app: INestApplication;
@@ -43,5 +44,9 @@ describe('Circuits (e2e)', (): void => {
 
     expect(response.status).toEqual(404);
     expect(response.body.error).toEqual('Not Found');
+  });
+
+  afterEach(async () => {
+    await app.close();
   });
 });

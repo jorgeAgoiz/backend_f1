@@ -211,4 +211,8 @@ describe('Qualifyings (e2e)', (): void => {
     expect(response.status).toEqual(404);
     expect(response.body.error).toEqual('Not Found');
   });
+
+  afterEach(async () => {
+    await app.close();
+  });
 });
