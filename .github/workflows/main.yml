@@ -5,22 +5,19 @@ on:
       - main
 
 jobs:
-  set-environment-variables:
+  test:
     runs-on: ubuntu-latest
     env:
-      NODE_ENV: 'test'
-      APP_PORT: ${{ secrets.APP_PORT }}
-      DB_HOST: ${{ secrets.DB_HOST }}
-      DB_PORT: ${{ secrets.DB_PORT }}
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      DB_NAME: ${{ secrets.DB_NAME }}
-      API_KEY: ${{ secrets.API_KEY }}
-      DSN_SENTRY: ${{ secrets.DSN_SENTRY }}
-      SENTRY_ENV: ${{ secrets.SENTRY_ENV}}
-  test:
-    needs: create-envfile
-    runs-on: ubuntu-latest
+        NODE_ENV: 'test'
+        APP_PORT: ${{ secrets.APP_PORT }}
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        API_KEY: ${{ secrets.API_KEY }}
+        DSN_SENTRY: ${{ secrets.DSN_SENTRY }}
+        SENTRY_ENV: ${{ secrets.SENTRY_ENV}}
     steps:
       - name: Get Code
         uses: actions/checkout@v3
