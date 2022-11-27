@@ -11,6 +11,7 @@ jobs:
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v1.3
         with:
+          envkey_NODE_ENV: 'test'
           envkey_APP_PORT: ${{ secrets.APP_PORT }}
           envkey_DB_HOST: ${{ secrets.DB_HOST }}
           envkey_DB_PORT: ${{ secrets.DB_PORT }}
@@ -36,5 +37,7 @@ jobs:
         run: npm ci
       - name: Run unit tests
         run: npm run test
+      - name: Learning
+        run: ls
       - name: Run E2E tests
         run: npm run test:e2e
