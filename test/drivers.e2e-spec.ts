@@ -23,7 +23,7 @@ describe('Drivers (e2e)', (): void => {
 
     expect(response.status).toEqual(200);
     expect(Array.isArray(response.body)).toBeTruthy();
-    expect(response.body).toHaveLength(333);
+    expect(response.body).toHaveLength(33);
   });
 
   it('/drivers/:id (GET) OK', async (): Promise<void> => {
