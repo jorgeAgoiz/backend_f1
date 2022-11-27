@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -29,7 +28,5 @@ jobs:
         run: npm ci
       - name: Run unit tests
         run: npm run test
-      - name: Learning
-        run: echo "$DB_PORT"
       - name: Run E2E tests
         run: npm run test:e2e
