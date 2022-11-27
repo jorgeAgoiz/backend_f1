@@ -8,16 +8,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-        NODE_ENV: 'test'
-        APP_PORT: ${{ secrets.APP_PORT }}
-        DB_HOST: ${{ secrets.DB_HOST }}
-        DB_PORT: ${{ secrets.DB_PORT }}
-        DB_USER: ${{ secrets.DB_USER }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_NAME: ${{ secrets.DB_NAME }}
-        API_KEY: ${{ secrets.API_KEY }}
-        DSN_SENTRY: ${{ secrets.DSN_SENTRY }}
-        SENTRY_ENV: ${{ secrets.SENTRY_ENV}}
+      NODE_ENV: 'test'
+      APP_PORT: ${{ secrets.APP_PORT }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      API_KEY: ${{ secrets.API_KEY }}
+      DSN_SENTRY: ${{ secrets.DSN_SENTRY }}
+      SENTRY_ENV: ${{ secrets.SENTRY_ENV}}
     steps:
       - name: Get Code
         uses: actions/checkout@v3
@@ -30,7 +30,6 @@ jobs:
       - name: Run unit tests
         run: npm run test
       - name: Learning
-        run: ls
         run: echo "$DB_PORT"
       - name: Run E2E tests
         run: npm run test:e2e
