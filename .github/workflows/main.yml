@@ -21,7 +21,7 @@ jobs:
           envkey_API_KEY: ${{ secrets.API_KEY }}
           envkey_DSN_SENTRY: ${{ secrets.DSN_SENTRY }}
           envkey_SENTRY_ENV: ${{ secrets.SENTRY_ENV}}
-          file_name: .env.test
+          file_name: '.env.test'
           fail_on_empty: true
   test:
     needs: create-envfile
