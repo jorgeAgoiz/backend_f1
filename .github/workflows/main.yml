@@ -20,13 +20,25 @@ jobs:
     steps:
       - name: Get Code
         uses: actions/checkout@v3
+
       - name: Install NodeJS
         uses: actions/setup-node@v3
         with:
           node-version: 16
+
       - name: Install dependencies
         run: npm ci
+
       - name: Run unit tests
         run: npm run test
+
       - name: Run E2E tests
         run: npm run test:e2e
+
+      - name: Install Railway CLI
+        run: npm i -g @railway/cli
+
+      - name: Deploy on Railway
+        run: railway up
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
