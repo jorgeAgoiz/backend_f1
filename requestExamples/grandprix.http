@@ -3,3 +3,5 @@
 GET http://localhost:3000/grand-prix HTTP/1.1
 
 ###
+
+GET http://localhost:3012/grand-prix/1 HTTP/1.1

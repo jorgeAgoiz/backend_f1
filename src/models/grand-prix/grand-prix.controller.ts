@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { GrandPrixService } from './grand-prix.service';
 
@@ -10,5 +10,10 @@ export class GrandPrixController {
   @Get()
   getAllGrandPrix() {
     return this.grandPrixService.getAll();
+  }
+
+  @Get('/:id')
+  getBestResultsByDriver(@Param('id') id: string) {
+    return this.grandPrixService.getBestResultsByDriverId(parseInt(id));
   }
 }
