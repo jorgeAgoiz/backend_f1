@@ -18,7 +18,7 @@ export class GrandPrixController {
   @ApiOperation({
     summary: 'Get all victories, podiums and pole positions by driver ID',
   })
-  @Get('/:id')
+  @Get('/best-results/:id')
   getBestResultsByDriver(@Param('id') id: string) {
     return this.grandPrixService.getBestResultsByDriverId(parseInt(id));
   }
