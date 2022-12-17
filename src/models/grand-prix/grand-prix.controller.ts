@@ -1,6 +1,6 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
+import { ApiKeyAuthGuard } from '../../auth/guard/apikey-auth.guard';
 import { GrandPrixService } from './grand-prix.service';
 
 @ApiTags('Grand Prix')

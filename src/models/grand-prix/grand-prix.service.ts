@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Grid } from '../grid/grid.entity';
@@ -26,6 +26,23 @@ export class GrandPrixService {
     this.logger.log(
       'Get Driver Best Results (Victories, Podiums and Pole Positions)',
     );
+    const driverRequested: GrandPrix = await this.repo.findOne({
+      relations: {
+        driver: true,
+      },
+      where: {
+        driver: {
+          id,
+        },
+      },
+    });
+
+    if (!driverRequested) {
+      throw new NotFoundException('Driver not found');
+    }
+
+    const { driver } = driverRequested;
+
     const victories: Array<RacePosition> = await this.repo
       .createQueryBuilder('grand_prix')
       .innerJoin('grand_prix.driver', 'driver')
@@ -62,6 +79,6 @@ export class GrandPrixService {
       ])
       .getRawMany();
 
-    return { victories, podiums, polePositions };
+    return { driver, victories, podiums, polePositions };
   }
 }

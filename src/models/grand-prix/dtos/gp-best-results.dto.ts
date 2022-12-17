@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { IsArray } from 'class-validator';
+import { IsArray, IsObject } from 'class-validator';
+import { DriverDto } from 'src/models/drivers/dtos/driver.dto';
 
 export class RacePosition {
   driver_name: string;
@@ -16,6 +17,11 @@ export interface PolePosition {
 }
 
 export class GPBestResultsDto {
+  @Expose()
+  @ApiProperty()
+  @IsObject()
+  driver: DriverDto;
+
   @Expose()
   @ApiProperty()
   @IsArray()
