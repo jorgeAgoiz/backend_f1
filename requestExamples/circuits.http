@@ -1,16 +1,16 @@
 ### CIRCUITS
 
-GET http://localhost:3000/circuits?country=estados%20unidos&mindistance=4.56&maxdistance=5.5 HTTP/1.1
+GET http://localhost:3012/circuits?country=estados%20unidos&mindistance=4.56&maxdistance=5.5 HTTP/1.1
 
 
 ###
 
-GET http://localhost:3000/circuits HTTP/1.1
+GET http://localhost:3012/circuits HTTP/1.1
 
 
 ### 
 
-POST http://localhost:3000/circuits HTTP/1.1
+POST http://localhost:3012/circuits HTTP/1.1
 content-type: application/json
 
 {
